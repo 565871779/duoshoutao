@@ -21,7 +21,7 @@ router.post('/',function(req, res){
             return
         } else {
            let sql = 'INSERT INTO user (uname,usex,phone,password,role) values (?,?,?,?,?)';
-           let param = [data.username, data.usex, data.phone, data.password, data.role] ;
+           let param = [data.uname, data.usex, data.phone, data.password, data.role] ;
            conn.query(sql, param, function(err, result) {
             if(err) {
                 res.json({
