@@ -1,14 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Duoshoutao from './duoshoutao'
 
+import home from '@/pages/home/home'
 Vue.use(Router)
 
-const router = new Router({
-	mode: 'history'
+export default new Router({
   routes: [
-    ...Duoshoutao
+    {
+      path: '/',
+      name: 'home',
+      component: home
+    }
   ]
 })
-
-export default router
