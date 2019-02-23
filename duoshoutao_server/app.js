@@ -23,7 +23,7 @@ app.use(function(req, res, next) {
 });
 
 let hostname = 'http://localhost:8088';
-let secret = 'xiaojia.www.one';
+let secret = 'duoshoutao.www.one';
 // 启用中间件
 app.use(bodyParser.urlencoded({extended: true}));//表单数据类型
 app.use(bodyParser.json());
@@ -38,7 +38,7 @@ global.conn = mysql.createConnection({
     user:'root',
     password:'123456',
     port:3306,
-    database:'duoshoutao',
+    database:'myduoshoutao',
     multipleStatements: true
 });
 conn.connect();

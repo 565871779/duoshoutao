@@ -2,9 +2,12 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import Vant from 'vant'
+import 'vant/lib/index.css'
 import router from './router'
 
 Vue.config.productionTip = false
+Vue.use(Vant)
 
 /* eslint-disable no-new */
 new Vue({
