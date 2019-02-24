@@ -1,18 +1,24 @@
 <template>
   <div class="root">
-    <div class="header">
-      <span>剁手淘</span>
-      <span>duoshoutao</span>
+    <div class="top">
+      <div class="header">
+        <span>剁手淘</span>
+        <span>duoshoutao</span>
+      </div>
+      <van-cell-group>
+        <van-field v-model="value" placeholder="搜索剁手淘商品"/>
+        <img src alt>
+      </van-cell-group>
     </div>
-    <van-cell-group>
-      <van-field v-model="value" placeholder="搜索剁手淘商品"/>
-      <img src="" alt="">
-    </van-cell-group>
+    <bottom></bottom>
   </div>
 </template>
 <script>
+import bottom from './index_bottom'
 export default {
-  components: {},
+  components: {
+      bottom
+  },
   data() {
     return {};
   },

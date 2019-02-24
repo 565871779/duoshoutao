@@ -170,10 +170,16 @@ export default {
   }
 .van-cell {
     line-height: 40px;
-    .van-cell__value {
-      padding-top: 8px;
+    /deep/ .van-cell__value {
+      padding-top: .2rem;
+      .van-field__body {
+        overflow: hidden;
+      }
+      i {
+        position: absolute;
+        right: 0;
+      }
     }
-
   }
   .radiosex  {
     span {
