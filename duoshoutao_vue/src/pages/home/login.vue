@@ -12,17 +12,17 @@
           <div class="input">
               <label for="">
                 账号:
-                <input type="text">
+                <input type="text" v-model="uname">
                 </label>
           </div>
           <div class="input">
               <label for="">
                 密码:
-                <input type="password">
+                <input type="password" v-model="password">
                 </label>
           </div>
         </div>
-        <div class="button">
+        <div class="button" @click="login">
           登陆
         </div>
         <div class="other">
@@ -35,16 +35,32 @@
 
 <script>
 import myheader from '@/common/myheader'
+import axios from 'axios'
 export default {
   components: {
     myheader
   },
   data () {
     return {
+      uname: '',
+      password: ''
     }
   },
   computed: {},
-  methods: {},
+  methods: {
+    login () {
+      let param = {}
+      param.uname = this.uname
+      param.password = this.password
+      axios.post('http://localhost:8088/login', param).then(this.loginSucess).catch(this.loginErr)
+    },
+    loginSucess (res) {
+      console.log(res)
+    },
+    loginErr (err) {
+      console.log(err)
+    }
+  },
   mounted () {}
 }
 </script>
