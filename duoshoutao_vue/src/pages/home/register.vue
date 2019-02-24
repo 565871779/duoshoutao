@@ -10,6 +10,7 @@
           label="用户名"
           placeholder="请输入用户名"
           :error-message="errmsg.uermsg"
+          @input="unameChange"
         />
         <van-field
           v-model="formdata.password"
@@ -19,7 +20,7 @@
           :error-message="errmsg.permsg"
           required
           clearable
-          @change="onChange"
+          @input="onChange"
         />
         <van-field
           v-model="affirm"
@@ -29,7 +30,7 @@
           :error-message="errmsg.aermsg"
           required
           clearable
-          @change="onChange"
+          @input="onChange"
         />
         <van-field
           v-model="formdata.phone"
@@ -39,26 +40,23 @@
           :error-message="errmsg.nermsg"
           required
           clearable
-          @change="onChange"
+          @input="onChange"
         />
         <div class="radiosex">
           <span>性别</span>
           <van-radio-group v-model="formdata.usex">
             <van-radio name="1">男</van-radio>
-            <van-radio name="0">女</van-radio>
+            <van-radio name="0" class="vanradio">女</van-radio>
+          </van-radio-group>
+        </div>
+        <div class="radiosex">
+          <span>角色</span>
+          <van-radio-group v-model="formdata.role">
+            <van-radio name="1">用户</van-radio>
+            <van-radio name="2">商家</van-radio>
           </van-radio-group>
         </div>
       </van-cell-group>
-      <van-radio-group v-model="formdata.role">
-        <van-cell-group>
-          <van-cell title="用户注册" clickable @click="radio = '1'">
-            <van-radio name="1"/>
-          </van-cell>
-          <van-cell title="商家注册" clickable @click="radio = '2'">
-            <van-radio name="2"/>
-          </van-cell>
-        </van-cell-group>
-      </van-radio-group>
       <van-button size="large" @click="register">立即注册</van-button>
     </form>
   </div>
@@ -91,6 +89,9 @@ export default {
     onClickLeft () {
       console.log(123)
     },
+    unameChange () {
+      this.errmsg.uermsg = ''
+    },
     onChange () {
       var This = this
       This.err = 0
@@ -112,8 +113,6 @@ export default {
         if (affirm !== passwd) {
           This.errmsg.aermsg = ''
           This.errmsg.aermsg = '两次输入的密码不一致'
-          console.log(passwd)
-          console.log(affirm)
           This.errmsg.err++
         } else {
           This.errmsg.aermsg = ''
@@ -133,6 +132,7 @@ export default {
     },
     register () {
       var This = this
+      This.errmsg.uermsg = ''
       if (This.err) {
         return
       }
@@ -142,13 +142,13 @@ export default {
         data: This.formdata
       })
         .then(response => {
-          console.log('注册成功', response.data)
+          console.log('请求成功', response.data)
           This.mydata = response.data
           if (This.mydata.r === 'user_existed') {
-            This.uermsg = '用户名已存在'
+            This.errmsg.uermsg = '用户名已存在'
           }
           if (This.mydata.r === 'ok') {
-            this.$router.push({ path: '/Login' })
+            this.$router.push({ path: '/login' })
           }
         })
         .catch(response => {
@@ -168,8 +168,12 @@ export default {
   .van-nav-bar__title {
     margin-left: 76px;
   }
-  .van-cell {
+.van-cell {
     line-height: 40px;
+    .van-cell__value {
+      padding-top: 8px;
+    }
+
   }
   .radiosex  {
     span {
@@ -185,6 +189,9 @@ export default {
       .van-radio {
         display: inline-block;
         margin-left: 60px;
+      }
+      .vanradio {
+        margin-left: 74px;
       }
     }
   }
