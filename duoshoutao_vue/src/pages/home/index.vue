@@ -2,32 +2,156 @@
   <div class="root">
     <div class="top">
       <div class="header">
-        <span>剁手淘</span>
-        <span>duoshoutao</span>
+        <div class="title">
+          <p>剁手淘</p>
+          <span>Duoshoutao</span>
+        </div>
+        <div class="search">
+          <input type="text" placeholder="搜索剁手淘商品">
+          <img src="@/assets/images/luyin.png" alt>
+        </div>
       </div>
-      <van-cell-group>
-        <van-field v-model="value" placeholder="搜索剁手淘商品"/>
-        <img src alt>
-      </van-cell-group>
+    </div>
+    <van-swipe :autoplay="3000" indicator-color="white">
+      <van-swipe-item>
+        <img src="@/assets/images/slide-1.jpg" alt>
+      </van-swipe-item>
+      <van-swipe-item>
+        <img src="@/assets/images/slide-2.jpg" alt>
+      </van-swipe-item>
+      <van-swipe-item>
+        <img src="@/assets/images/slide-3.jpg" alt>
+      </van-swipe-item>
+      <van-swipe-item>
+        <img src="@/assets/images/slide-4.jpg" alt>
+      </van-swipe-item>
+      <van-swipe-item>
+        <img src="@/assets/images/slide-5.jpg" alt>
+      </van-swipe-item>
+    </van-swipe>
+    <div class="cuxiao">
+       <div class="shopImg"></div>
+       <div class="detail">
+         <p class="sizeBig">还剩<span>00</span>时<span>43</span>分<span>56</span>秒</p>
+         <p class="grey">秒杀价：<span class="sizeBig">￥19.0</span></p>
+         <p class="grey">原价：<del> ￥190</del></p>
+       </div>
+       <p class="sizeBig miaosha">快速秒杀<span class="grey">&nbsp;></span></p>
     </div>
     <bottom></bottom>
   </div>
 </template>
+<style lang="scss" scoped>
+.root {
+  .top {
+    .header {
+      display: flex;
+      background-color: #d51c2b;
+      height: 60px;
+      align-items: center;
+      padding-left: 8px;
+      box-sizing: border-box;
+      .title {
+        font-size: 22px;
+        font-weight: 600;
+        text-align: center;
+        p {
+          background-image: -webkit-linear-gradient( bottom,#828277,#e3dfdf,#eee );
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        span {
+          background-image: -webkit-linear-gradient( bottom,#828277,#e3dfdf,#eee );
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+      .search {
+        margin-left: 15px;
+        width: 216px;
+        height: 40px;
+        border-radius: 5px;
+        background-color: #fff;
+        input {
+          height: 100%;
+          width: 175px;
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+  .slider {
+    width: 100%;
+    height: 100px;
+    border: 1px solid red;
+  }
+  .van-swipe {
+    .van-swipe__track {
+      .van-swipe-item {
+        img {
+          width: 100%;
+          height: 145px;
+        }
+      }
+    }
+  }
+  .cuxiao {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    .shopImg {
+      width: 100px;
+      height: 100px;
+      margin-right: 8px;
+      border: 1px solid red;
+    }
+    .detail {
+      height: 100px;
+      color: black;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      padding: 16px 20px 16px 0;
+      box-sizing: border-box;
+      span {
+        color:red;
+      }
+    }
+     .sizeBig {
+          font-weight: bold;
+          font-size: 16px;
+        }
+        .grey {
+        color: #8c8686;
+        del {
+          text-decoration: line-through;
+        }
+      }
+      .miaosha {
+        font-size: 22px;
+      }
+  }
+}
+</style>
 <script>
 import bottom from './index_bottom'
+import { Lazyload } from 'vant'
 export default {
   components: {
-      bottom
+    bottom,
+    Lazyload
   },
-  data() {
-    return {};
+  data () {
+    return {
+      value: '',
+      images: ['https://img.yzcdn.cn/1.jpg', 'https://img.yzcdn.cn/2.jpg']
+    }
   },
   computed: {},
   methods: {},
-  mounted() {}
-};
-</script>
-<style lang="scss" scoped>
-.root {
+  mounted () {}
 }
-</style>
+</script>
