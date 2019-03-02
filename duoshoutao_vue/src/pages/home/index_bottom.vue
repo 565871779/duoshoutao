@@ -3,49 +3,49 @@
       <div class="buttons">
           <div class="item">
               <div class="button">
-                  <img src="@/assets/cuxiao.png" alt="">
+                  <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-class/cuxiao.png" alt="">
               </div>
               <p>促销卖场</p>
           </div>
           <div class="item">
               <div class="button">
-                 <img src="@/assets/chongzhi.png" alt="">
+                 <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-class/chongzhi.png" alt="">
               </div>
               <p>重置</p>
           </div>
            <div class="item">
               <div class="button">
-                  <img src="@/assets/tuan.png" alt="">
+                  <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-class/tuan.png" alt="">
               </div>
               <p>团购</p>
           </div>
            <div class="item">
               <div class="button">
-                 <img src="@/assets/caipiao.png" alt="">
+                 <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-class/caipiao.png" alt="">
               </div>
               <p>彩票</p>
           </div>
            <div class="item">
               <div class="button">
-                 <img src="@/assets/status.png" alt="">
+                 <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-class/status.png" alt="">
               </div>
               <p>订单状态</p>
           </div>
            <div class="item">
               <div class="button">
-                 <img src="@/assets/history.png" alt="">
+                 <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-class/history.png" alt="">
               </div>
               <p>浏览历史</p>
           </div>
            <div class="item">
               <div class="button">
-                 <img src="@/assets/focus.png" alt="">
+                 <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-class/focus.png" alt="">
               </div>
               <p>我的关注</p>
           </div>
            <div class="item">
               <div class="button">
-                 <img src="@/assets/life.png" alt="">
+                 <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-class/life.png" alt="">
               </div>
               <p>生活娱乐</p>
           </div>
@@ -55,7 +55,6 @@
       </div>
       <div class="others">
           <div v-for="(item, index) in otherItem" :key="index">
-              <p>{{ title }}</p>
               <div class="img">
               <img :src="item.imgUrl" alt="">
               <span>
@@ -142,6 +141,7 @@ export default {
         padding: .2rem;
         box-sizing: border-box;
         justify-content: space-between;
+        margin-bottom: 1.2rem;
         div {
             width: 30%;
             height: 100%;

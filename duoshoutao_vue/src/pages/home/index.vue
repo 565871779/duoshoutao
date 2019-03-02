@@ -14,25 +14,25 @@
     </div>
     <van-swipe :autoplay="3000" indicator-color="white">
       <van-swipe-item>
-        <img src="@/assets/images/slide-1.jpg" alt>
+        <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-slide/slide-1.jpg" alt>
       </van-swipe-item>
       <van-swipe-item>
-        <img src="@/assets/images/slide-2.jpg" alt>
+        <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-slide/slide-2.jpg" alt>
       </van-swipe-item>
       <van-swipe-item>
-        <img src="@/assets/images/slide-3.jpg" alt>
+        <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-slide/slide-3.jpg" alt>
       </van-swipe-item>
       <van-swipe-item>
-        <img src="@/assets/images/slide-4.jpg" alt>
+        <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-slide/slide-4.jpg" alt>
       </van-swipe-item>
       <van-swipe-item>
-        <img src="@/assets/images/slide-5.jpg" alt>
+        <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-slide/slide-5.jpg" alt>
       </van-swipe-item>
     </van-swipe>
     <div class="cuxiao">
        <div class="shopImg"></div>
        <div class="detail">
-         <p class="sizeBig">还剩<span>00</span>时<span>43</span>分<span>56</span>秒</p>
+         <p class="sizeBig">还剩<span>00</span>时<span>{{minutes}}</span>分<span>{{seconds}}</span>秒</p>
          <p class="grey">秒杀价：<span class="sizeBig">￥19.0</span></p>
          <p class="grey">原价：<del> ￥190</del></p>
        </div>
@@ -45,12 +45,16 @@
 .root {
   .top {
     .header {
+      width: 100%;
       display: flex;
       background-color: #d51c2b;
       height: 60px;
       align-items: center;
       padding-left: 8px;
       box-sizing: border-box;
+      position: fixed;
+      top: 0;
+      z-index: 5;
       .title {
         font-size: 22px;
         font-weight: 600;
@@ -86,6 +90,7 @@
     border: 1px solid red;
   }
   .van-swipe {
+    margin-top: 60px;
     .van-swipe__track {
       .van-swipe-item {
         img {
@@ -147,11 +152,25 @@ export default {
   data () {
     return {
       value: '',
-      images: ['https://img.yzcdn.cn/1.jpg', 'https://img.yzcdn.cn/2.jpg']
+      images: ['https://img.yzcdn.cn/1.jpg', 'https://img.yzcdn.cn/2.jpg'],
+      seconds: 50,
+      minutes: 43
     }
   },
   computed: {},
-  methods: {},
-  mounted () {}
+  methods: {
+    setTime () {
+      setInterval(() => {
+        this.seconds--
+        if (this.seconds === 0) {
+          this.seconds = 60
+          this.minutes--
+        }
+      }, 1000)
+    }
+  },
+  mounted () {
+    this.setTime()
+  }
 }
 </script>

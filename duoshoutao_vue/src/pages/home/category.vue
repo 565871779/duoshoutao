@@ -76,6 +76,7 @@ export default {
         width: 100%;
         display: flex;
         flex-wrap: wrap;
+        margin-bottom: 1.2rem;
       .item {
           width: 42%;
           background: orangered;
