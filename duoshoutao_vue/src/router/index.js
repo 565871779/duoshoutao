@@ -8,10 +8,15 @@ import home from '@/pages/home/home'
 import find from '@/pages/home/find'
 import mine from '@/pages/home/mine'
 import shopcar from '@/pages/home/shopcar'
+import detail from '@/pages/home/store/detail'
+import myorder from '@/pages/home/order/myorder'
+import addressList from '@/pages/home/address/addressList'
+import addressAdd from '@/pages/home/address/addressAdd'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/register',
@@ -54,6 +59,25 @@ export default new Router({
           component: shopcar
         }
       ]
+    }, {
+      path: '/store/detail',
+      name: 'detail',
+      component: detail
+    },
+    {
+      path: '/order/myorder',
+      name: 'myorder',
+      component: myorder
+    },
+    {
+      path: '/address/addresslist',
+      name: 'addressList',
+      component: addressList
+    },
+    {
+      path: '/address/addressadd',
+      name: 'addressAdd',
+      component: addressAdd
     }
   ]
 })

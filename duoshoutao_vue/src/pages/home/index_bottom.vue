@@ -98,6 +98,7 @@ export default {
 <style lang="scss" scoped>
 .bottom{
     width: 100%;
+    z-index: 100;
     .buttons {
         height: 4.5rem;
         display: flex;

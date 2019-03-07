@@ -94,6 +94,10 @@ app.use('/register',require('./module/register'));
 //登录界面子路由
 app.use('/login',require('./module/login'));
 
+//分类界面子路由
+app.use('/category',require('./module/category'));
+
+
 //静态资源托管
 app.use('/uploads', express.static('uploads'));
 app.use(express.static('static'));

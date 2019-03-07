@@ -1,121 +1,69 @@
 <template>
-  <div class="root">
-      <header>
-          <div></div>
-          <div class="bottom">
-              <div>浏览历史</div>
-              <div>关注的店铺</div>
-              <div>我的评价</div>
-          </div>
-      </header>
-      <div class="item">
-          <div class="left">
-              <div class="icon"></div>
-              <p>我的订单</p>
-          </div>
-          <div class="right">查看全部订单 ></div>
-      </div>
-      <div class="item-group">
-          <div class="item">
-              <div class="left">我的钱包</div>
-          </div>
-          <div class="item">
-          <div class="left">
-              <div class="icon"></div>
-              <p>服务与反馈</p>
-          </div>
-          <div class="right">意见反馈搬这了 ></div>
-      </div>
-      <div class="item">
-          <div class="left">
-              <div class="icon"></div>
-              <p>剁手掏会员</p>
-          </div>
-          <div class="right">会员俱乐部 ></div>
-      </div>
-      <div class="item">
-          <div class="left">
-              <div class="icon"></div>
-              <p>猜你喜欢</p>
-          </div>
-          <div class="right">查看全部订单 ></div>
-      </div>
-      </div>
+  <div>
+    <img class="user-poster" src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png">
+    <van-row class="user-links">
+      <van-col span="6">
+        <van-icon name="pending-payment" />
+        待付款
+      </van-col>
+      <van-col span="6">
+        <van-icon name="records" />
+        待接单
+      </van-col>
+      <van-col span="6">
+        <van-icon name="tosend" />
+        待发货
+      </van-col>
+      <van-col span="6">
+        <van-icon name="logistics" />
+        已发货
+      </van-col>
+    </van-row>
+
+    <van-cell-group class="user-group">
+      <van-cell icon="records" title="全部订单" is-link />
+    </van-cell-group>
+
+    <van-cell-group>
+      <van-cell icon="points" title="我的积分" is-link />
+      <van-cell icon="gold-coin-o" title="我的优惠券" is-link />
+      <van-cell icon="gift-o" title="我收到的礼物" is-link />
+      <van-cell icon="discount" title="设置" is-link />
+    </van-cell-group>
   </div>
 </template>
 
 <script>
+import { Row, Col, Icon, Cell, CellGroup } from 'vant'
 export default {
-  components: {},
-  data () {
-    return {
-    }
-  },
-  computed: {},
-  methods: {},
-  mounted () {}
+  components: {
+    [Row.name]: Row,
+    [Col.name]: Col,
+    [Icon.name]: Icon,
+    [Cell.name]: Cell,
+    [CellGroup.name]: CellGroup
+  }
 }
 </script>
-<style lang="scss" scoped>
-.root{
-    border-top: 1px solid #fff;
-    background: #fafafa;
-    min-height: 100vh;
-    header {
-        width: 100%;
-        height: 4rem;
-        background-image: url('http://duoshoutao.oss-cn-beijing.aliyuncs.com/mine/login_my_main.jpg');
-        background-repeat: no-repeat;
-        background-position: cover;
-        border-top: 1px solid #fff;
-        position: relative;
-        margin-bottom: .4rem;
-        >div:first-child {
-            width: 1.5rem;
-            height: 1.5rem;
-            line-height: 1.5rem;
-            text-align: center;
-            margin: .8rem auto;
-            border-radius: 50%;
-            background: url('http://duoshoutao.oss-cn-beijing.aliyuncs.com/mine/login_logo_before_my_main.png');
-        }
-        .bottom {
-            display: flex;
-            justify-content: space-between;
-            position: absolute;
-            width: 100%;
-            background: rgba(255,255,255,.5);
-            bottom: 0;
-            div {
-                border-right: 1px solid #ccc;
-                text-align: center;
-                width: 33%;
-                height: 1rem;
-                line-height: 1rem
-            }
-        }
-    }
-    .item-group {
-        margin-top: .3rem;
-    }
-    .item {
-        width: 100%;
-        height: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background: white;
-        margin-top: .1rem;
-        padding: 0 .2rem;
-        box-sizing: border-box;
-        .left {
-            font-size: .4rem;
-        }
-        .right {
-            color: #ccc;
-            font-size: .32rem;
-        }
-    }
 
+<style lang="scss">
+.user {
+  &-poster {
+    width: 100%;
+    display: block;
+  }
+  &-group {
+    margin-bottom: 15px;
+  }
+  &-links {
+    padding: 15px 0;
+    font-size: 12px;
+    text-align: center;
+    background-color: #fff;
+    .van-icon {
+      display: block;
+      font-size: 24px;
+    }
+  }
 }
 </style>
