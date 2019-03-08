@@ -12,6 +12,7 @@ import detail from '@/pages/home/store/detail'
 import myorder from '@/pages/home/order/myorder'
 import addressList from '@/pages/home/address/addressList'
 import addressAdd from '@/pages/home/address/addressAdd'
+import userUpdate from '@/pages/home/user/userUpdate'
 
 Vue.use(Router)
 
@@ -27,6 +28,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: login
+    },
+    {
+      path: '/userUpdate',
+      name: 'userUpdate',
+      component: userUpdate
     },
     {
       path: '/home',
