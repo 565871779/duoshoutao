@@ -1,18 +1,18 @@
 <template>
   <div class="goods">
     <van-swipe class="goods-swipe" :autoplay="3000">
-      <van-swipe-item v-for="thumb in goods.thumb" :key="thumb">
-        <img :src="thumb">
+      <van-swipe-item v-for="(imageUrl, index) in goods.imageUrl" :key="index">
+        <img :src="imageUrl">
       </van-swipe-item>
     </van-swipe>
 
     <van-cell-group>
       <van-cell>
-        <div class="goods-title">{{ goods.title }}</div>
+        <div class="goods-title">{{ goods.details }}</div>
         <div class="goods-price">{{ formatPrice(goods.price) }}</div>
       </van-cell>
       <van-cell class="goods-express">
-        <van-col span="10">运费：{{ goods.express }}</van-col>
+        <van-col span="10">运费：免运费</van-col>
         <van-col span="14">剩余：{{ goods.remain }}</van-col>
       </van-cell>
     </van-cell-group>
@@ -72,6 +72,7 @@ import {
 } from 'vant'
 import skuData from './data'
 import { LIMIT_TYPE } from './constants'
+import axios from 'axios'
 export default {
   components: {
     [Tag.name]: Tag,
@@ -91,9 +92,8 @@ export default {
       goods: {
         title: '美国伽力果（约680g/3个）',
         price: 2680,
-        express: '免运费',
         remain: 19,
-        thumb: [
+        imageUrl: [
           'https://img.yzcdn.cn/public_files/2017/10/24/e5a5a02309a41f9f5def56684808d9ae.jpeg',
           'https://img.yzcdn.cn/public_files/2017/10/24/1791ba14088f9c2be8c610d0a6cc0f93.jpeg'
         ]
@@ -135,10 +135,10 @@ export default {
   },
   methods: {
     formatPrice () {
-      return '¥' + (this.goods.price / 100).toFixed(2)
+      return '¥' + (this.goods.price / 1).toFixed(2)
     },
     onClickCart () {
-      this.$router.push('cart')
+      this.$router.push('/home/shopCar')
     },
     addShopCar () {
       this.showBase = true
@@ -148,7 +148,25 @@ export default {
     },
     onAddCartClicked (data) {
       this.$toast('add cart:' + JSON.stringify(data))
+    },
+    getGoodsDetail () {
+      var gid = this.$route.query.gid
+      axios.get('http://localhost:8088/detail?gid=' + gid).then(this.getGoodsDetailSuccess).catch()
+    },
+    getGoodsDetailSuccess (res) {
+      this.goods = res.data.r[0]
+      var inventory = this.goods.inventory
+      var sellNumber = this.goods.sellNumber
+      this.goods.remain = inventory - sellNumber
+      this.goods.imageUrl = [this.goods.imageUrl, this.goods.imageUrl]
+      console.log(this.skuData.sku.tree[0].v[0].imgUrl)
+      this.skuData.sku.tree[0].v[0].imgUrl = this.goods.imageUrl[0]
+      console.log(this.skuData.sku.tree[0].v[1].imgUrl)
+      this.skuData.sku.tree[0].v[1].imgUrl = this.goods.imageUrl[1]
     }
+  },
+  created () {
+    this.getGoodsDetail()
   }
 }
 </script>

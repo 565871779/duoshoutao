@@ -11,8 +11,10 @@
       <van-cell-group>
           <div></div>
       <van-cell title="性别" is-link @click="showSex=true" />
-      <van-cell title="我的收货地址" is-link />
-      <van-cell title="手机号" is-link />
+      <van-cell title="我的收货地址" is-link url="/address/addresslist" />
+      <van-cell title="修改手机号" is-link url="/address/updateTel" />
+      <van-cell title="修改密码" is-link url="/address/updatePs" />
+      <van-cell title="注销用户" is-link />
       </van-cell-group>
       <van-popup v-model="showSex" position="bottom">
           <van-picker :columns="sexArr" show-toolbar @cancel="showSex=false" @confirm="changeSex" />

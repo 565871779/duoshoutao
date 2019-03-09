@@ -17,7 +17,9 @@ export default {
           },
           {
             id: '1215',
-            name: '白色'
+            name: '白色',
+            imgUrl:
+                'https://img.yzcdn.cn/upload_files/2017/02/21/FjKTOxjVgnUuPmHJRdunvYky9OHP.jpg!100x100.jpg'
           }
         ],
         k_s: 's1',

@@ -26,7 +26,7 @@
               <p>彩票</p>
           </div>
            <div class="item">
-              <div class="button">
+              <div class="button" @click="$router.push('/order/myorder')">
                  <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-class/status.png" alt="">
               </div>
               <p>订单状态</p>

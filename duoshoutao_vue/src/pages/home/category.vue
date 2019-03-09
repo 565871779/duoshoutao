@@ -26,7 +26,7 @@
                          :startY="parseInt(startY)"
                          @pullingUp="onPullingUp">
         <ul class="bottom">
-          <li class="item" v-for="(item,index) in items" :key="index">
+          <li class="item" v-for="(item,index) in items" :key="index" @click="linkTo(item.gid)">
             <img class="img" :src="item.imageUrl" alt="">
             <p>{{item.gname}}</p>
             </li>
@@ -63,9 +63,6 @@ export default {
         },
         {
           name: '鲜花宠物'
-        },
-        {
-          name: '精品男装'
         },
         {
           name: '生鲜水果'
@@ -134,6 +131,9 @@ export default {
       // 模拟上拉 加载更多数据
       this.getCategoryInfo(this.chosedName)
       console.log('上拉加载')
+    },
+    linkTo (id) {
+      this.$router.push('/store/detail?gid=' + id)
     }
   },
   mounted () {

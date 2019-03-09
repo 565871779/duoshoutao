@@ -13,6 +13,9 @@ import myorder from '@/pages/home/order/myorder'
 import addressList from '@/pages/home/address/addressList'
 import addressAdd from '@/pages/home/address/addressAdd'
 import userUpdate from '@/pages/home/user/userUpdate'
+import updatePs from '@/pages/home/user/updatePs'
+import updateTel from '@/pages/home/user/updateTel'
+import search from '@/pages/home/search/search'
 
 Vue.use(Router)
 
@@ -84,6 +87,21 @@ export default new Router({
       path: '/address/addressadd',
       name: 'addressAdd',
       component: addressAdd
+    },
+    {
+      path: '/address/updatePs',
+      name: 'updatePs',
+      component: updatePs
+    },
+    {
+      path: '/address/updateTel',
+      name: 'updateTel',
+      component: updateTel
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: search
     }
   ]
 })

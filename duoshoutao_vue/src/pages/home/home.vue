@@ -27,19 +27,26 @@ export default {
     clickTip (ind) {
       this.pageStatus = ind
       if (ind === 0) {
+        localStorage.setItem('bottomClick', 0)
         this.$router.push('/home')
       } else if (ind === 1) {
+        localStorage.setItem('bottomClick', 1)
         this.$router.push('/home/find')
       } else if (ind === 2) {
+        localStorage.setItem('bottomClick', 2)
         this.$router.push('/home/category')
       } else if (ind === 3) {
+        localStorage.setItem('bottomClick', 3)
         this.$router.push('/home/shopcar')
       } else {
+        localStorage.setItem('bottomClick', 4)
         this.$router.push('/home/mine')
       }
     }
   },
-  mounted () {}
+  mounted () {
+    this.pageStatus = JSON.parse(localStorage.getItem('bottomClick'))
+  }
 }
 </script>
 <style lang="scss" scoped>

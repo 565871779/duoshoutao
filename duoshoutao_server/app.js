@@ -97,6 +97,8 @@ app.use('/login',require('./module/login'));
 //分类界面子路由
 app.use('/category',require('./module/category'));
 
+//商品详情界面子路由
+app.use('/detail',require('./module/detail'));
 
 //静态资源托管
 app.use('/uploads', express.static('uploads'));
