@@ -14,7 +14,8 @@ router.post('/',function(req, res) {
             res.json({r:'p_err'});
             return ;
         } else {
-            res.json({r:'ok'});
+            res.json({r:'ok',
+            uid: result[0].uid});
             return ;
         }     
     })

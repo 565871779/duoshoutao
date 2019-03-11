@@ -20,7 +20,7 @@
           title="商品标题"
           thumb="//img.yzcdn.cn/upload_files/2017/07/02/af5b9f44deaeb68000d7e4a711160c53.jpg"
           origin-price="10.00"
-        >
+          >
   <div slot="footer">
     <van-button size="mini">按钮</van-button>
     <van-button size="mini">按钮</van-button>

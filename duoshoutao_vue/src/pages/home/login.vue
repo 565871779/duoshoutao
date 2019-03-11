@@ -56,6 +56,7 @@ export default {
     },
     loginSucess (res) {
       console.log(res)
+      localStorage.setItem('userId', res.data.uid)
     },
     loginErr (err) {
       console.log(err)

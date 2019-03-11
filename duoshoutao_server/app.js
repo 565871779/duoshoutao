@@ -100,6 +100,15 @@ app.use('/category',require('./module/category'));
 //商品详情界面子路由
 app.use('/detail',require('./module/detail'));
 
+//立即购买创建订单子路由
+app.use('/createOrder',require('./module/detail'));
+
+//获取购物车商品子路由
+app.use('/shopCar',require('./module/shopCar'));
+
+//收获地址子路由
+app.use('/address', require('./module/address'))
+
 //静态资源托管
 app.use('/uploads', express.static('uploads'));
 app.use(express.static('static'));

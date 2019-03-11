@@ -120,14 +120,14 @@ export default {
         goods_id: 946755
       }
     ],
-    price: '1.00',
+    price: '0',
     stock_num: 227,
     collection_id: 2261,
     collection_price: 0,
     none_sku: false,
     sold_num: 0,
-    min_price: '1.00',
-    max_price: '1.00',
+    min_price: '0.00',
+    max_price: '0.00',
     messages: [
       {
         datetime: '0',
@@ -167,7 +167,7 @@ export default {
     title: '测试商品',
     picture:
         'https://img.yzcdn.cn/upload_files/2017/03/16/Fs_OMbSFPa183sBwvG_94llUYiLa.jpeg?imageView2/2/w/100/h/100/q/75/format/jpg',
-    price: 1,
+    price: 0,
     origin: ''
   }
 }

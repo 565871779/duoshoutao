@@ -107,7 +107,7 @@ export default {
         s1: '30349',
         s2: '1193'
       },
-      customSkuValidator: () => '请选择xxx',
+      customSkuValidator: () => '请选择商品属性',
       customStepperConfig: {
         quotaText: '单次限购100件',
         stockFormatter: stock => `剩余${stock}件`,
@@ -144,25 +144,47 @@ export default {
       this.showBase = true
     },
     onBuyClicked (data) {
-      this.$toast('buy:' + JSON.stringify(data))
+      console.log('buy:' + JSON.stringify(data))
     },
     onAddCartClicked (data) {
-      this.$toast('add cart:' + JSON.stringify(data))
+      console.log('buy:' + JSON.stringify(data))
+      let param = {}
+      param.gid = this.$route.query.gid
+      console.log(this.$route.query.gid)
+      param.uid = JSON.parse(localStorage.getItem('userId'))
+      param.creatTime = new Date().getTime()
+      param.loseTime = param.creatTime + 1000 * 60 * 2
+      param.number = data.selectedNum
+
+      axios.post('http://localhost:8088/detail/addShopCar', param).then(this.addCartClickedSuccess).catch()
+    },
+    addCartClickedSuccess (res) {
+      console.log(res)
+      this.$toast('添加成功，赶紧看看吧')
     },
     getGoodsDetail () {
-      var gid = this.$route.query.gid
+      let gid = this.$route.query.gid
       axios.get('http://localhost:8088/detail?gid=' + gid).then(this.getGoodsDetailSuccess).catch()
     },
     getGoodsDetailSuccess (res) {
       this.goods = res.data.r[0]
-      var inventory = this.goods.inventory
-      var sellNumber = this.goods.sellNumber
+      let data = this.skuData
+      let list = data.sku.list
+      let inventory = this.goods.inventory
+      let sellNumber = this.goods.sellNumber
       this.goods.remain = inventory - sellNumber
       this.goods.imageUrl = [this.goods.imageUrl, this.goods.imageUrl]
       console.log(this.skuData.sku.tree[0].v[0].imgUrl)
       this.skuData.sku.tree[0].v[0].imgUrl = this.goods.imageUrl[0]
       console.log(this.skuData.sku.tree[0].v[1].imgUrl)
-      this.skuData.sku.tree[0].v[1].imgUrl = this.goods.imageUrl[1]
+      data.sku.tree[0].v[1].imgUrl = this.goods.imageUrl[1]
+      data.goods_info.title = this.goods.gname
+      data.goods_info.picture = this.goods.imageUrl[1]
+      data.sku.price = (this.goods.price).toFixed(2)
+      for (var i = 0; i < list.length; i++) {
+        list[i].price = (this.goods.price * 100).toFixed(2)
+      }
+      this.skuData = data
     }
   },
   created () {
