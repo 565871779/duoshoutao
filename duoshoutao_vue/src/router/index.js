@@ -17,6 +17,7 @@ import updatePs from '@/pages/home/user/updatePs'
 import updateTel from '@/pages/home/user/updateTel'
 import search from '@/pages/home/search/search'
 import createOrder from '@/pages/home/order/buyToCreateOrder'
+import orderDetail from '@/pages/home/order/orderDetail'
 
 Vue.use(Router)
 
@@ -108,6 +109,11 @@ export default new Router({
       path: '/order/createOrder',
       name: 'createOrder',
       component: createOrder
+    },
+    {
+      path: '/order/orderDetail',
+      name: 'orderDetail',
+      component: orderDetail
     }
   ]
 })

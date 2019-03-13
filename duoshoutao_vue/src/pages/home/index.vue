@@ -30,13 +30,28 @@
       </van-swipe-item>
     </van-swipe>
     <div class="cuxiao">
-       <div class="shopImg"></div>
-       <div class="detail">
-         <p class="sizeBig">还剩<span>00</span>时<span>{{minutes}}</span>分<span>{{seconds}}</span>秒</p>
-         <p class="grey">秒杀价：<span class="sizeBig">￥19.0</span></p>
-         <p class="grey">原价：<del> ￥190</del></p>
-       </div>
-       <p class="sizeBig miaosha">快速秒杀<span class="grey">&nbsp;></span></p>
+      <div class="shopImg">
+        <img
+          src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/goods/%E6%8A%A4%E8%82%A4%E7%BE%8E%E5%A6%86/meizhuang-10.jpg"
+          alt
+        >
+      </div>
+      <div class="detail">
+        <p class="sizeBig">还剩
+          <span>00</span>时
+          <span>{{minutes}}</span>分
+          <span>{{seconds}}</span>秒
+        </p>
+        <p class="grey">秒杀价：
+          <span class="sizeBig">￥19.0</span>
+        </p>
+        <p class="grey">原价：
+          <del>￥190</del>
+        </p>
+      </div>
+      <p class="sizeBig miaosha">快速秒杀
+        <span class="grey">&nbsp;></span>
+      </p>
     </div>
     <bottom></bottom>
   </div>
@@ -60,12 +75,22 @@
         font-weight: 600;
         text-align: center;
         p {
-          background-image: -webkit-linear-gradient( bottom,#828277,#e3dfdf,#eee );
+          background-image: -webkit-linear-gradient(
+            bottom,
+            #828277,
+            #e3dfdf,
+            #eee
+          );
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
         span {
-          background-image: -webkit-linear-gradient( bottom,#828277,#e3dfdf,#eee );
+          background-image: -webkit-linear-gradient(
+            bottom,
+            #828277,
+            #e3dfdf,
+            #eee
+          );
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
@@ -110,7 +135,10 @@
       width: 100px;
       height: 100px;
       margin-right: 8px;
-      border: 1px solid red;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
     .detail {
       height: 100px;
@@ -122,22 +150,22 @@
       padding: 16px 20px 16px 0;
       box-sizing: border-box;
       span {
-        color:red;
+        color: red;
       }
     }
-     .sizeBig {
-          font-weight: bold;
-          font-size: 16px;
-        }
-        .grey {
-        color: #8c8686;
-        del {
-          text-decoration: line-through;
-        }
+    .sizeBig {
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .grey {
+      color: #8c8686;
+      del {
+        text-decoration: line-through;
       }
-      .miaosha {
-        font-size: 22px;
-      }
+    }
+    .miaosha {
+      font-size: 22px;
+    }
   }
 }
 </style>

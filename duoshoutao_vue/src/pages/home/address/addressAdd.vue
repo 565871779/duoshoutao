@@ -6,8 +6,6 @@
         show-postal
         show-delete
         show-set-default
-        show-search-result
-        :search-result="searchResult"
         @save="onSave"
         @delete="onDelete"
         @change-detail="onChangeDetail"

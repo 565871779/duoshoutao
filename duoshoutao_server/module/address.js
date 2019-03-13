@@ -29,6 +29,24 @@ router.get('/getAddressList', function(req, res){
 
 })
 
+router.get('/getAddress', function(req, res){
+    let uid = req.query.uid;
+    let sql = 'select * from address where uid = ? and isdefault = 1';
+    conn.query(sql, uid, function(err, result) {
+        if(err) {
+            console.log(err)
+            res.json({
+                r:'数据库错误'
+            })
+            return
+        }
+        res.json({
+            r: result
+        })
+    })
+
+})
+
 router.post('/saveAddress', function(req, res){
     let par = req.body;
     let sql;

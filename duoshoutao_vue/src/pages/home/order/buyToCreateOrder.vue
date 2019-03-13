@@ -1,3 +1,4 @@
+/* eslint-disable vue/no-dupe-keys */
 <template>
   <div class="root">
     <van-cell value is-link>
@@ -8,23 +9,23 @@
           </div>
           <div class="right">
             <div class="head">
-              <p>XXX</p>
-              <span class="custom-text">13668409856</span>
+              <p>{{address.sname}}</p>
+              <span class="custom-text">{{address.sphone}}</span>
             </div>
-            <div class="address">164564654asfasfasfasfasfasfasfasgasdgas56asas</div>
+            <div class="address">
+              {{address.detailadd }}
+              </div>
             <div class="tip">收货不便时，可选择免费代收货服务</div>
           </div>
         </div>
       </template>
     </van-cell>
     <van-card
-      num="2"
-      tag="标签"
-      price="2.00"
-      desc="描述信息"
-      title="商品标题"
-      thumb="//img.yzcdn.cn/upload_files/2017/07/02/af5b9f44deaeb68000d7e4a711160c53.jpg"
-      origin-price="10.00"
+      :num="num"
+      :price="price"
+      :desc="details"
+      :title="gname"
+      :thumb="imageUrl"
     >
       <div slot="footer">
         <van-cell value="普通配送">
@@ -34,9 +35,9 @@
           <template slot>
             <div class="content" style="flex-direction: row-reverse; margin-left:.5rem">
               <div class="van-stepper van-sku__stepper">
-                <button class="van-stepper__minus van-stepper__minus--disabled"></button>
-                <input type="number" disabled="disabled" class="van-stepper__input" v-model="number">
-                <button class="van-stepper__plus"></button>
+                <button class="van-stepper__minus" :class="{'van-stepper__minus--disabled': num===1}" @click="num>1?num--:''"></button>
+                <input type="number" :disabled="true" class="van-stepper__input" v-model="num">
+                <button class="van-stepper__plus" @click="num++"></button>
               </div>
             </div>
           </template>
@@ -90,27 +91,112 @@
             <p>共1件</p>
             <h6>
               小计:
-              <span>￥11.50</span>
+              <span>￥{{ totalPrice }}</span>
             </h6>
           </div>
         </div>
       </div>
     </van-card>
-    <van-submit-bar :price="3050" button-text="提交订单" @submit="onSubmit"/>
+    <van-submit-bar :price="totalPrice * 100 " button-text="提交订单" @click.native="show = true"  @submit="submit"/>
+    <van-popup v-model="show" position="bottom">
+          <div class="header">
+           <van-icon name="cross" size=".5rem" @click.native="show=false"/>
+           <p>确认付款</p>
+           <van-icon name="question-o" size=".5rem" />
+          </div>
+          <div class="popupContent">
+            <div class="price">
+              <span>￥</span>
+              99.00
+            </div>
+          </div>
+          <div class="userInfo">
+            <p>剁手淘账号</p>
+            <span>Emiya</span>
+          </div>
+          <div class="userInfo">
+            <p>付款方式</p>
+            <span>支付宝<van-icon name="arrow" /></span>
+          </div>
+          <van-button type="info"  size="large" @click="pay">确认支付</van-button>
+      </van-popup>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   components: {},
   data () {
     return {
-      number: 0
+      address: {
+        sname: '',
+        sphone: '',
+        detailadd: ''
+      },
+      gname: '',
+      details: '',
+      imageUrl: '',
+      price: 0,
+      num: 1,
+      totalPrice: 0,
+      aid: '',
+      show: false
     }
   },
-  computed: {},
-  methods: {},
-  mounted () {}
+  watch: {
+    price: function (val) {
+      console.log(this.totalPrice)
+      this.totalPrice = (this.price * this.num).toFixed(2)
+    },
+    num: function (val) {
+      console.log(this.totalPrice)
+      this.totalPrice = (this.price * this.num).toFixed(2)
+    }
+  },
+  methods: {
+    getAddress () {
+      axios.get('http://localhost:8088/address/getAddress?uid=' + JSON.parse(localStorage.getItem('userId'))).then(this.getAddressSuccess).catch()
+    },
+    getAddressSuccess (res) {
+      let data = res.data.r[0]
+      this.address.sname = data.sname
+      this.address.sphone = data.sphone
+      this.address.detailadd = data.saddress + ' ' + data.detailadd
+      this.aid = data.aid
+      console.log(this.address)
+    },
+    getGoodsInfo () {
+      axios.get('http://localhost:8088/createOrder?gid=' + this.$route.query.gid).then(this.getGoodsInfoSuccess).catch()
+    },
+    getGoodsInfoSuccess (res) {
+      let data = res.data.r[0]
+      this.gname = data.gname
+      this.imageUrl = data.imageUrl
+      this.price = data.price
+      this.details = data.details
+    },
+    submit () {
+      let param = {}
+      param.aid = this.aid
+      param.gid = this.$route.query.gid
+      param.num = this.num
+      param.uid = JSON.parse(localStorage.getItem('userId'))
+      param.submitTime = new Date().getTime()
+      param.loseTime = param.submitTime + 1000 * 60 * 5
+      axios.post('http://localhost:8088/createOrder/saveOrder', param).then(this.submitSuccess).catch((err) => { console.log(err) })
+    },
+    submitSuccess (res) {
+      console.log(res)
+    },
+    pay () {
+      this.$toast.success('支付成功')
+    }
+  },
+  mounted () {
+    this.getAddress()
+    this.getGoodsInfo()
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -223,6 +309,48 @@ export default {
         height: 24px;
       }
     }
+  }
+  .van-popup--bottom {
+    min-height: 70vh;
+    .header {
+        display: flex;
+        justify-content: space-between;
+        padding: .3rem;
+        box-sizing: border-box;
+        border-bottom: 1px solid #fbf7f7;
+        align-items: center;
+        >p {
+          font-size: .34rem;
+        }
+          }
+      .popupContent {
+        padding-top: .8rem;
+        padding-bottom: .5rem;
+        .price {
+          font-size: .7rem;
+          font-weight: bold;
+          text-align: center;
+          span {
+            font-size: .5rem;
+          }
+        }
+      }
+      .userInfo {
+        padding: .3rem;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #fbf7f7;
+        align-items: center;
+      }
+      .van-button--info {
+        background: #1989fa;
+        width: 92%;
+        margin: 0 auto;
+        margin-top: 2rem;
+        display: block;
+        border-radius: .15rem;
+        color: #fff;
+      }
   }
 }
 </style>

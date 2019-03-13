@@ -101,7 +101,7 @@ app.use('/category',require('./module/category'));
 app.use('/detail',require('./module/detail'));
 
 //立即购买创建订单子路由
-app.use('/createOrder',require('./module/detail'));
+app.use('/createOrder',require('./module/createOrder'));
 
 //获取购物车商品子路由
 app.use('/shopCar',require('./module/shopCar'));

@@ -35,7 +35,7 @@
       <van-goods-action-mini-btn icon="chat-o">客服</van-goods-action-mini-btn>
       <van-goods-action-mini-btn icon="cart-o" @click="onClickCart">购物车</van-goods-action-mini-btn>
       <van-goods-action-big-btn @click="addShopCar">加入购物车</van-goods-action-big-btn>
-      <van-goods-action-big-btn primary>立即购买</van-goods-action-big-btn>
+      <van-goods-action-big-btn @click="addShopCar" primary>立即购买</van-goods-action-big-btn>
     </van-goods-action>
     <van-sku
       v-model="showBase"
@@ -144,7 +144,7 @@ export default {
       this.showBase = true
     },
     onBuyClicked (data) {
-      console.log('buy:' + JSON.stringify(data))
+      this.$router.push('/order/createOrder?gid=' + this.$route.query.gid)
     },
     onAddCartClicked (data) {
       console.log('buy:' + JSON.stringify(data))

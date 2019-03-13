@@ -181,7 +181,7 @@ export default {
         margin-bottom: 1.2rem;
       .item {
           width: 42%;
-          height: 2.5rem;
+          height: 2.7rem;
           margin: .2rem;
           img {
             width: 100%;
