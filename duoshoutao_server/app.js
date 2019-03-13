@@ -109,6 +109,9 @@ app.use('/shopCar',require('./module/shopCar'));
 //收获地址子路由
 app.use('/address', require('./module/address'))
 
+//个人中心子路由
+app.use('/usercenter', require('./module/usercenter'))
+
 //静态资源托管
 app.use('/uploads', express.static('uploads'));
 app.use(express.static('static'));

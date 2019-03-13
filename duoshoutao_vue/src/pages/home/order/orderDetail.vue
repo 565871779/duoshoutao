@@ -97,7 +97,7 @@
     </div>
     <div class="pay">
         <van-button round  plain type="danger">付款</van-button>
-        <van-button round  plain >取消订单</van-button>
+        <van-button round  plain @click="cancle">取消订单</van-button>
     </div>
   </div>
 </template>
@@ -143,7 +143,7 @@ export default {
       this.goods.submitTime = data.submitTime
       this.goods.price = data.price
       this.goods.num = data.num
-      this.goods.time = new Date(data.submitTime)
+      this.goods.time = new Date(data.submitTime / 1).toLocaleString()
       this.totalPrice = (this.goods.price * this.goods.num).toFixed(2)
       this.getAddress()
     },
@@ -157,6 +157,17 @@ export default {
       this.address.sname = data.sname
       this.address.sphone = data.sphone
       this.address.detailadd = data.detailadd + '   ' + data.saddress
+    },
+    cancle () {
+      this.$dialog.confirm({
+        message: '确定取消订单吗'
+      }).then().catch()
+    },
+    cancleOrder () {
+      axios.get('http://localhost:8088/createOrder/').then().catch()
+    },
+    cancleOrderSuccess () {
+
     }
   },
   mounted () {

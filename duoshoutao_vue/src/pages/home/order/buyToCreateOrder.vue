@@ -1,7 +1,7 @@
 /* eslint-disable vue/no-dupe-keys */
 <template>
   <div class="root">
-    <van-cell value is-link>
+    <van-cell value is-link v-if="address.sname !== '暂无'" @click="toAddressList">
       <template slot="title">
         <div class="slot">
           <div class="icon">
@@ -20,6 +20,7 @@
         </div>
       </template>
     </van-cell>
+    <div v-else></div>
     <van-card
       :num="num"
       :price="price"
@@ -130,7 +131,7 @@ export default {
   data () {
     return {
       address: {
-        sname: '',
+        sname: '暂无',
         sphone: '',
         detailadd: ''
       },
@@ -155,10 +156,24 @@ export default {
     }
   },
   methods: {
+    toAddressList () {
+      this.$router.push('/address/addresslist')
+    },
     getAddress () {
       axios.get('http://localhost:8088/address/getAddress?uid=' + JSON.parse(localStorage.getItem('userId'))).then(this.getAddressSuccess).catch()
     },
     getAddressSuccess (res) {
+      if (res.data.r.length === 0) {
+        this.$dialog.confirm({
+          title: '请先设置收货地址',
+          message: '您还没有设置收货地址，请点击这里设置'
+        }).then(() => {
+          console.log(666)
+          this.$router.push('/address/addressadd')
+        }).catch(() => {
+          this.$router.go(-1)
+        })
+      }
       let data = res.data.r[0]
       this.address.sname = data.sname
       this.address.sphone = data.sphone

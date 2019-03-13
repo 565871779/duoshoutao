@@ -4,7 +4,7 @@
         :area-list="areaList"
         :address-info="addressInfo"
         show-postal
-        show-delete
+        :show-delete='showDetle'
         show-set-default
         @save="onSave"
         @delete="onDelete"
@@ -28,6 +28,7 @@ export default {
     return {
       areaList: list(),
       searchResult: [],
+      showDetle: true,
       addressInfo: {
         id: '',
         name: '',
@@ -67,6 +68,12 @@ export default {
     },
     saveSuccess (res) {
       console.log(res)
+      if (res.data.r === 'ok') {
+        this.$toast.success('保存成功')
+        setTimeout(() => {
+          this.$router.go(-1)
+        }, 1000)
+      }
     },
     onDelete () {
       Toast('delete')
@@ -111,6 +118,8 @@ export default {
   mounted () {
     if (this.$route.query.aid) {
       this.getAddress()
+    } else {
+      this.showDetle = false
     }
   }
 }

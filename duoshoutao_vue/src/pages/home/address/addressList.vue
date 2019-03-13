@@ -17,6 +17,7 @@
         :list="list"
         @add="onAdd"
         @edit="onEdit"
+        @click.native="choseAddress"
       />
     </div>
   </div>
@@ -56,6 +57,10 @@ export default {
     onEdit (item, index) {
       this.$router.push('/address/addressAdd?aid=' + item.id)
     },
+    choseAddress () {
+      localStorage.setItem('choseAid', this.chosenAddressId)
+      this.$router.go(-1)
+    },
     getAddressList () {
       axios
         .get('http://localhost:8088/address/getAddressList?uid=' + JSON.parse(localStorage.getItem('userId')))
@@ -66,21 +71,32 @@ export default {
       console.log(res)
       let data = res.data.r
       for (let i = 0; i < data.length; i++) {
+        this.list[i] = {}
         this.list[i].id = data[i].aid
         this.list[i].name = data[i].sname
         this.list[i].tel = data[i].sphone
         this.list[i].address = data[i].detailadd
-        console.log(data[i].isdefault)
         if (data[i].isdefault === 1) {
           this.chosenAddressId = data[i].aid
         }
-        console.log(typeof this.chosenAddressId)
       }
-      console.log(this.list, data)
     }
   },
   mounted () {
     this.getAddressList()
+    console.log(this.$route.matched)
+  },
+  beforeRouteLeave (to, from, next) {
+    // 导航离开该组件的对应路由时调用
+    // 可以访问组件实例 `this`
+    console.log(to)
+    console.log(from)
+    if (to.name !== 'createOrder') {
+      localStorage.removeItem('choseAid')
+    }
+    if (to.name === 'createOrder' || to.name === 'addressAdd') {
+      next()
+    }
   }
 }
 </script>
