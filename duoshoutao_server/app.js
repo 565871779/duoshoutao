@@ -94,6 +94,9 @@ app.use('/register',require('./module/register'));
 //登录界面子路由
 app.use('/login',require('./module/login'));
 
+//首页子路由
+app.use('/home',require('./module/home'));
+
 //分类界面子路由
 app.use('/category',require('./module/category'));
 
