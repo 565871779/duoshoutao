@@ -30,9 +30,18 @@ router.get('/getAddressList', function(req, res){
 })
 
 router.get('/getAddress', function(req, res){
+    let sql;
     let uid = req.query.uid;
-    let sql = 'select * from address where uid = ? and isdefault = 1';
-    conn.query(sql, uid, function(err, result) {
+    let aid = req.query.aid;
+    let id;
+    if (aid) {
+        sql = 'select * from address where aid = ? ';
+        id = aid;
+    } else {
+        sql = 'select * from address where uid = ? and isdefault = 1';
+        id = uid;
+    }
+    conn.query(sql, id, function(err, result) {
         if(err) {
             console.log(err)
             res.json({

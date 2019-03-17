@@ -160,9 +160,17 @@ export default {
       this.$router.push('/address/addresslist')
     },
     getAddress () {
-      axios.get('http://localhost:8088/address/getAddress?uid=' + JSON.parse(localStorage.getItem('userId'))).then(this.getAddressSuccess).catch()
+      let request
+      if (JSON.parse(localStorage.getItem('choseAid'))) {
+        request = 'http://localhost:8088/address/getAddress?aid=' + JSON.parse(localStorage.getItem('choseAid'))
+      } else {
+        request = 'http://localhost:8088/address/getAddress?uid=' + JSON.parse(localStorage.getItem('userId'))
+      }
+
+      axios.get(request).then(this.getAddressSuccess).catch()
     },
     getAddressSuccess (res) {
+      console.log(res)
       if (res.data.r.length === 0) {
         this.$dialog.confirm({
           title: '请先设置收货地址',
@@ -179,7 +187,7 @@ export default {
       this.address.sphone = data.sphone
       this.address.detailadd = data.saddress + ' ' + data.detailadd
       this.aid = data.aid
-      console.log(this.address)
+      localStorage.removeItem('choseAid')
     },
     getGoodsInfo () {
       axios.get('http://localhost:8088/createOrder?gid=' + this.$route.query.gid).then(this.getGoodsInfoSuccess).catch()
@@ -206,6 +214,9 @@ export default {
     },
     pay () {
       this.$toast.success('支付成功')
+      setTimeout(() => {
+        this.$router.push('/order/myorder')
+      }, 1000)
     }
   },
   mounted () {

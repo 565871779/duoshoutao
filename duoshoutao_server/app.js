@@ -107,10 +107,14 @@ app.use('/createOrder',require('./module/createOrder'));
 app.use('/shopCar',require('./module/shopCar'));
 
 //收获地址子路由
-app.use('/address', require('./module/address'))
+app.use('/address', require('./module/address'));
 
 //个人中心子路由
-app.use('/usercenter', require('./module/usercenter'))
+app.use('/usercenter', require('./module/usercenter'));
+
+//搜索子路由
+app.use('/search', require('./module/search'));
+
 
 //静态资源托管
 app.use('/uploads', express.static('uploads'));

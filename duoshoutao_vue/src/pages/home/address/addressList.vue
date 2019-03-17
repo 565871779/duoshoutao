@@ -45,7 +45,8 @@ export default {
           tel: '1320000000',
           address: '浙江省杭州市滨江区江南大道 15 号'
         }
-      ]
+      ],
+      isFromOrder: false
     }
   },
 
@@ -58,8 +59,10 @@ export default {
       this.$router.push('/address/addressAdd?aid=' + item.id)
     },
     choseAddress () {
-      localStorage.setItem('choseAid', this.chosenAddressId)
-      this.$router.go(-1)
+      if (this.isFromOrder) {
+        localStorage.setItem('choseAid', this.chosenAddressId)
+        this.$router.go(-1)
+      }
     },
     getAddressList () {
       axios
@@ -86,17 +89,13 @@ export default {
     this.getAddressList()
     console.log(this.$route.matched)
   },
-  beforeRouteLeave (to, from, next) {
-    // 导航离开该组件的对应路由时调用
-    // 可以访问组件实例 `this`
-    console.log(to)
+  beforeRouteEnter (to, from, next) {
     console.log(from)
-    if (to.name !== 'createOrder') {
-      localStorage.removeItem('choseAid')
-    }
-    if (to.name === 'createOrder' || to.name === 'addressAdd') {
-      next()
-    }
+    next(vm => {
+      if (from.name === 'createOrder') {
+        vm.isFromOrder = true
+      }
+    })
   }
 }
 </script>

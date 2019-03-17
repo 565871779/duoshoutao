@@ -113,7 +113,8 @@ export default {
     },
     getCategoryInfo (name) {
       this.page++
-      axios.get('http://localhost:8088/category?name=' + name + '&page=' + this.page).then(this.getCategoryInfoSucess).catch((err) => { console.log(err) })
+      axios.get('http://localhost:8088/category?name=' + name + '&page=' + this.page)
+        .then(this.getCategoryInfoSucess).catch((err) => { console.log(err) })
     },
     getCategoryInfoSucess (res) {
       console.log(res)

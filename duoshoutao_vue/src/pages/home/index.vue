@@ -7,7 +7,7 @@
           <span>Duoshoutao</span>
         </div>
         <div class="search">
-          <input type="text" placeholder="搜索剁手淘商品">
+          <input @keydown="toSearch" type="text" placeholder="搜索剁手淘商品" v-model="kw">
           <img src="@/assets/images/luyin.png" alt>
         </div>
       </div>
@@ -182,7 +182,8 @@ export default {
       value: '',
       images: ['https://img.yzcdn.cn/1.jpg', 'https://img.yzcdn.cn/2.jpg'],
       seconds: 50,
-      minutes: 43
+      minutes: 43,
+      kw: ''
     }
   },
   computed: {},
@@ -195,6 +196,12 @@ export default {
           this.minutes--
         }
       }, 1000)
+    },
+    toSearch (kw) {
+      console.log(kw)
+      if (kw.key === 'Enter') {
+        this.$router.push('./search?kw=' + this.kw)
+      }
     }
   },
   mounted () {
