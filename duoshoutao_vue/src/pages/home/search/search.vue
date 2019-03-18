@@ -54,7 +54,6 @@ export default {
         'https://img.yzcdn.cn/upload_files/2017/07/02/af5b9f44deaeb68000d7e4a711160c53.jpg',
       kw: this.$route.query.kw,
       items: [],
-      itemsTemp: [],
       active: '',
       value: '',
       isShowSearch: false,
@@ -73,7 +72,6 @@ export default {
     getItemSuccess (res) {
       console.log(res)
       this.items = res.data.r
-      this.itemsTemp = [...this.items]
     },
     toDeatail (id) {
       this.$router.push('/store/detail?gid=' + id)
@@ -82,7 +80,6 @@ export default {
       console.log(index)
       if (index === 1) {
         this.items = this.items.sort((a, b) => a.price - b.price)
-        console.log(this.itemsTemp)
       } else if (index === 2) {
         this.items = this.items.sort((a, b) => b.price - a.price)
       } else if (index === 0) {

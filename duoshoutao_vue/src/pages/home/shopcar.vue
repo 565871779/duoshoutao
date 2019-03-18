@@ -17,6 +17,7 @@
           />
         </van-checkbox>
       </van-checkbox-group>
+      <van-button type="warning">删除</van-button>
     <van-submit-bar
       :price="totalPrice"
       :disabled="!checkedGoods.length"
@@ -84,12 +85,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.card-goods {
+/deep/.card-goods {
   padding: 10px 0;
+  box-sizing: border-box;
   background-color: #fff;
   &__item {
     position: relative;
     background-color: #fafafa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     .van-checkbox__label {
       width: 100%;
       height: auto; // temp
@@ -102,6 +107,7 @@ export default {
       z-index: 1;
       position: absolute;
       margin-top: -10px;
+
     }
     .van-card__price {
       color: #f44;
