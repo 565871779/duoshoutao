@@ -1,22 +1,4 @@
-const express = require('express')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;
+const express = require('express');
 const router = express.Router();
 router.post('/getGoodsList',function(req, res) {
     let data = req.body;

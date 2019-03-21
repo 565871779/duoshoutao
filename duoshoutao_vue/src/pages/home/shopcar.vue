@@ -17,7 +17,7 @@
           />
         </van-checkbox>
       </van-checkbox-group>
-      <van-button type="warning">删除</van-button>
+      <van-button @click="delectItem" type="danger" plain>删除</van-button>
     <van-submit-bar
       :price="totalPrice"
       :disabled="!checkedGoods.length"
@@ -67,7 +67,8 @@ export default {
       return (price / 1).toFixed(2)
     },
     onSubmit () {
-      this.$toast('点击结算')
+      console.log(this.checkedGoods)
+      this.$router.push('/order/createOrder?id=' + this.checkedGoods)
     },
     getGoodsList () {
       axios.get('http://localhost:8088/shopCar/getShopCarList?uid=' + this.uid).then(this.getGoodsListSuccess).catch()
@@ -75,6 +76,24 @@ export default {
     getGoodsListSuccess (res) {
       this.goods = res.data.r
       console.log(res)
+    },
+    delectItem () {
+      this.$dialog.confirm({
+        title: '确定从购物车中删除所选项吗？',
+        message: ''
+      }).then(() => {
+        for (let i = 0; i < this.checkedGoods.length; i++) {
+          axios.get('http://localhost:8088/shopCar/delect?id=' + this.checkedGoods[i])
+            .then(this.delectItemSuccess)
+            .catch()
+        }
+      }).catch(() => {
+        // on cancel
+      })
+    },
+    delectItemSuccess (res) {
+      console.log(res)
+      this.getGoodsList()
     }
   },
   mounted () {
@@ -116,6 +135,11 @@ export default {
 }
 .van-submit-bar {
   bottom: 1.2rem;
+}
+.van-button--plain {
+  position: fixed;
+  bottom: 1.2rem;
+  z-index: 999;
 }
 .root {
   width: 100%;

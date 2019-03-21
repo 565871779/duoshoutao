@@ -20,13 +20,17 @@
         </div>
       </template>
     </van-cell>
-    <div v-else></div>
-    <van-card
-      :num="num"
-      :price="price"
-      :desc="details"
-      :title="gname"
-      :thumb="imageUrl"
+    <div v-else>
+    </div>
+    <div style="padding-bottom:1.2rem">
+      <van-card
+      :num="item.num"
+      :price="item.price"
+      :desc="item.details"
+      :title="item.gname"
+      :thumb="item.imageUrl"
+      v-for="(item,index) in glist"
+      :key="index"
     >
       <div slot="footer">
         <van-cell value="普通配送">
@@ -36,9 +40,9 @@
           <template slot>
             <div class="content" style="flex-direction: row-reverse; margin-left:.5rem">
               <div class="van-stepper van-sku__stepper">
-                <button class="van-stepper__minus" :class="{'van-stepper__minus--disabled': num===1}" @click="num>1?num--:''"></button>
-                <input type="number" :disabled="true" class="van-stepper__input" v-model="num">
-                <button class="van-stepper__plus" @click="num++"></button>
+                <button class="van-stepper__minus" :class="{'van-stepper__minus--disabled': item.number===1}" @click="item.number>1?(item.number--,num--):''"></button>
+                <input type="number" :disabled="true" class="van-stepper__input" v-model="item.number">
+                <button class="van-stepper__plus" @click="item.number++;num++"></button>
               </div>
             </div>
           </template>
@@ -92,28 +96,30 @@
             <p>共1件</p>
             <h6>
               小计:
-              <span>￥{{ totalPrice }}</span>
+              <span>￥{{ item.price * item.number }}</span>
             </h6>
           </div>
         </div>
       </div>
     </van-card>
-    <van-submit-bar :price="totalPrice * 100 " button-text="提交订单" @click.native="show = true"  @submit="submit"/>
-    <van-popup v-model="show" position="bottom">
+    </div>
+
+    <van-submit-bar :price="totalPrice * 100 " button-text="提交订单"   @submit="submit"/>
+    <van-popup v-model="show" position="bottom" @close="close()">
           <div class="header">
-           <van-icon name="cross" size=".5rem" @click.native="show=false"/>
+           <van-icon name="cross" size=".5rem" @click.native="close()"/>
            <p>确认付款</p>
            <van-icon name="question-o" size=".5rem" />
           </div>
           <div class="popupContent">
             <div class="price">
               <span>￥</span>
-              99.00
+              {{totalPrice + '.00'}}
             </div>
           </div>
           <div class="userInfo">
             <p>剁手淘账号</p>
-            <span>Emiya</span>
+            <span>{{uname}}</span>
           </div>
           <div class="userInfo">
             <p>付款方式</p>
@@ -135,27 +141,28 @@ export default {
         sphone: '',
         detailadd: ''
       },
-      gname: '',
-      details: '',
-      imageUrl: '',
-      price: 0,
-      num: 1,
-      totalPrice: 0,
       aid: '',
-      show: false
+      glist: [],
+      totalPrice: 0,
+      show: false,
+      gid: this.$route.query.gid,
+      id: this.$route.query.id,
+      num: 0,
+      uid: JSON.parse(localStorage.getItem('userId')),
+      uname: ''
     }
   },
   watch: {
-    price: function (val) {
-      console.log(this.totalPrice)
-      this.totalPrice = (this.price * this.num).toFixed(2)
-    },
-    num: function (val) {
-      console.log(this.totalPrice)
-      this.totalPrice = (this.price * this.num).toFixed(2)
-    }
+    num: 'getTotalPrice'
   },
   methods: {
+    getTotalPrice () {
+      let temp = 0
+      for (let i = 0; i < this.glist.length; i++) {
+        temp += this.glist[i].number * this.glist[i].price
+      }
+      this.totalPrice = temp
+    },
     toAddressList () {
       this.$router.push('/address/addresslist')
     },
@@ -176,7 +183,6 @@ export default {
           title: '请先设置收货地址',
           message: '您还没有设置收货地址，请点击这里设置'
         }).then(() => {
-          console.log(666)
           this.$router.push('/address/addressadd')
         }).catch(() => {
           this.$router.go(-1)
@@ -190,38 +196,96 @@ export default {
       localStorage.removeItem('choseAid')
     },
     getGoodsInfo () {
-      axios.get('http://localhost:8088/createOrder?gid=' + this.$route.query.gid).then(this.getGoodsInfoSuccess).catch()
+      let id = this.id
+      if (this.gid) {
+        axios.get('http://localhost:8088/createOrder?gid=' + this.gid)
+          .then(this.getGoodsInfoSuccess)
+          .catch((err) => {
+            console.log(err)
+          })
+      } else {
+        let arr = id.split(',')
+        for (let i = 0; i < arr.length; i++) {
+          id = arr[i]
+          axios.get('http://localhost:8088/createOrder/byID?id=' + id)
+            .then(this.getGoodsInfoSuccess)
+            .catch((err) => {
+              console.log(err)
+            })
+        }
+      }
     },
     getGoodsInfoSuccess (res) {
-      let data = res.data.r[0]
-      this.gname = data.gname
-      this.imageUrl = data.imageUrl
-      this.price = data.price
-      this.details = data.details
+      console.log(res.data)
+      let data = res.data.r
+      if (!data[0].number) {
+        data[0].number = 1
+      }
+      this.glist = [...this.glist, data[0]]
+      console.log(this.glist)
+      for (let i = 0; i < this.glist.length; i++) {
+        this.num += this.glist[i].number
+      }
     },
     submit () {
-      let param = {}
-      param.aid = this.aid
-      param.gid = this.$route.query.gid
-      param.num = this.num
-      param.uid = JSON.parse(localStorage.getItem('userId'))
-      param.submitTime = new Date().getTime()
-      param.loseTime = param.submitTime + 1000 * 60 * 5
-      axios.post('http://localhost:8088/createOrder/saveOrder', param).then(this.submitSuccess).catch((err) => { console.log(err) })
+      this.show = true
+    },
+    close () {
+      for (let i = 0; i < this.glist.length; i++) {
+        let param = {}
+        param.aid = this.aid
+        param.gid = this.glist[i].gid
+        param.num = this.glist[i].number
+        param.uid = this.uid
+        param.submitTime = new Date().getTime()
+        param.loseTime = param.submitTime + 1000 * 60 * 5
+        axios.post('http://localhost:8088/createOrder/saveOrder', param).then(this.submitSuccess).catch((err) => { console.log(err) })
+      }
     },
     submitSuccess (res) {
       console.log(res)
+      if (res.data.r !== 'ok') {
+        return 0
+      }
+      this.$toast.fail('已取消支付')
+      setTimeout(() => {
+        this.$router.push('/order/myorder')
+      }, 1000)
     },
     pay () {
+      for (let i = 0; i < this.glist.length; i++) {
+        let param = {}
+        param.aid = this.aid
+        param.gid = this.glist[i].gid
+        param.num = this.glist[i].number
+        param.uid = this.uid
+        param.submitTime = new Date().getTime()
+        param.loseTime = param.submitTime + 1000 * 60 * 5
+        axios.post('http://localhost:8088/createOrder/pay', param).then(this.paySuccess).catch((err) => { console.log(err) })
+      }
+    },
+    paySuccess (res) {
+      console.log(res)
       this.$toast.success('支付成功')
       setTimeout(() => {
         this.$router.push('/order/myorder')
       }, 1000)
+    },
+    getUserInfo () {
+      axios.get('http://localhost:8088/userCenter/getUserInfo?uid=' + this.uid)
+        .then(this.getUserInfoSucc)
+        .catch()
+    },
+    getUserInfoSucc (res) {
+      console.log(res)
+      let data = res.data.r[0]
+      this.uname = data.uname
     }
   },
   mounted () {
     this.getAddress()
     this.getGoodsInfo()
+    this.getUserInfo()
   }
 }
 </script>
@@ -283,6 +347,7 @@ export default {
   .van-card:not(:first-child) {
     width: 96%;
     margin: auto;
+    margin-top: .5rem;
   }
   .van-cell__title,
   .van-cell__value {

@@ -1,6 +1,23 @@
 const express = require('express');
 const router = express.Router();
 
+router.get('/getUserInfo', function(req, res){
+    let uid = req.query.uid;
+    let sql = 'select * from user where uid = ?;'
+    conn.query(sql, [uid], function(err, result) {
+        if(err) {
+            console.log(err)
+            res.json({
+                r:'数据库错误'
+            })
+            return
+        }
+        res.json({
+            r: result
+        })
+    })
+})
+
 router.post('/changePs', function(req, res){
     let uid = req.body.uid;
     let ps = req.body.password

@@ -38,7 +38,8 @@
       </div>
     </header>
     <div class="history">
-      <van-tag plain v-for="(item,index) in kwList" :key="index">{{item}}</van-tag>
+      <p>历史搜索</p>
+      <van-tag plain v-for="(item,index) in kwList" @click="checkKw(item)" :key="index">{{item}}</van-tag>
     </div>
   </div>
 </div>
@@ -63,6 +64,11 @@ export default {
   },
   computed: {},
   methods: {
+    checkKw (kw) {
+      this.kw = kw
+      this.getItem()
+      this.isShowSearch = false
+    },
     getItem () {
       axios
         .get('http://localhost:8088/search?kw=' + this.kw + '&uid=' + this.uid)
@@ -87,6 +93,7 @@ export default {
       }
     },
     toSearch () {
+      this.getHistory()
       this.isShowSearch = true
     },
     getHistory () {
@@ -180,6 +187,23 @@ export default {
       }
       .button {
         border-radius: .3rem;
+      }
+    }
+    .history {
+      width: 100%;
+      height: 92vh;
+      background-color: #fff;
+      border-radius: .15rem;
+      box-sizing: border-box;
+      padding-top: .3rem;
+      p
+        {
+          margin-bottom: .3rem;
+        }
+      .van-tag {
+        min-width: .5rem;
+        margin-left: .3rem;
+        text-align: center;
       }
     }
   }

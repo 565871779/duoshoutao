@@ -28,7 +28,7 @@
           >
             <div slot="footer">
               <div v-if="item.status === 0">
-                <van-button size="mini">取消订单</van-button>
+                <van-button size="mini"  @click.native="cancelOrder(item.oid)" >取消订单</van-button>
                 <van-button size="mini">支付</van-button>
               </div>
               <div v-else>
@@ -62,7 +62,7 @@
           >
             <div slot="footer">
               <div v-if="item.status === 0">
-                <van-button size="mini">取消订单</van-button>
+                <van-button size="mini" @click.native="cancelOrder(item.oid)" >取消订单</van-button>
                 <van-button size="mini">支付</van-button>
               </div>
               <div v-else>
@@ -130,7 +130,7 @@
           >
             <div slot="footer">
               <div v-if="item.status === 0">
-                <van-button size="mini">取消订单</van-button>
+                <van-button size="mini" @click.native="cancelOrder(item.oid)">取消订单</van-button>
                 <van-button size="mini">支付</van-button>
               </div>
               <div v-else>
@@ -145,13 +145,14 @@
 </template>
 
 <script>
-import { Tab, Tabs, NavBar } from 'vant'
+import { Tab, Tabs, NavBar, Dialog } from 'vant'
 import axios from 'axios'
 export default {
   components: {
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,
-    [NavBar.name]: NavBar
+    [NavBar.name]: NavBar,
+    [Dialog.name]: Dialog
   },
   data () {
     return {
@@ -174,6 +175,24 @@ export default {
     toDetail (id) {
       console.log(123)
       this.$router.push('/order/orderDetail?oid=' + id)
+    },
+    cancelOrder (id) {
+      Dialog.confirm({
+        message: '您确定删除所选订单吗'
+      }).then(() => {
+        // on confirm
+        axios.get('http://localhost:8088/createOrder/cancelOrder?oid=' + id)
+          .then(this.cancelOrderSucc)
+      }).catch(() => {
+        // on cancel
+      })
+    },
+    cancelOrderSucc (res) {
+      console.log(res)
+      if (res.data.r === 'ok') {
+        this.$toast('取消订单成功')
+        this.getOrderList()
+      }
     }
   },
   mounted () {
