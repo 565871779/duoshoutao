@@ -21,5 +21,22 @@ router.post('/getGoodsList',function(req, res) {
     })
 })
 
+router.get('/',function(req,res){
+    let sql = 'SELECT * FROM goods order by rand() limit 5;'
+    conn.query(sql,function(err,result) {
+        if(err) {
+            console.log(err)
+            res.json({
+                r:'数据库错误'
+            })
+            return
+        }
+        res.json({
+            r: result
+        })
+    })
+
+})
+module.exports = router;
 
 module.exports = router;

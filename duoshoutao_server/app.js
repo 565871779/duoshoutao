@@ -118,6 +118,9 @@ app.use('/usercenter', require('./module/usercenter'));
 //搜索子路由
 app.use('/search', require('./module/search'));
 
+//发现子路由
+app.use('/find', require('./module/find'));
+
 
 //静态资源托管
 app.use('/uploads', express.static('uploads'));
