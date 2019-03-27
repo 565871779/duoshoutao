@@ -19,6 +19,25 @@ router.get('/', function(req, res){
 
 })
 
+router.get('/addHistory', function(req, res){
+    let gid = req.query.gid;
+    let uid = req.query.uid;
+    let sql = "INSERT INTO history (uid,gid) values (?,?);";
+    conn.query(sql,[uid, gid], function(err, result) {
+        if(err) {
+            console.log(err)
+            res.json({
+                r:'数据库错误'
+            })
+            return
+        }
+        res.json({
+            r: result
+        })
+    })
+})
+
+
 router.post('/addShopCar', function(req, res){
     let gid = req.body.gid;
     let uid = req.body.uid;

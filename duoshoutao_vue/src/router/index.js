@@ -18,6 +18,7 @@ import updateTel from '@/pages/home/user/updateTel'
 import search from '@/pages/home/search/search'
 import createOrder from '@/pages/home/order/buyToCreateOrder'
 import orderDetail from '@/pages/home/order/orderDetail'
+import history from '@/pages/home/history/history'
 
 Vue.use(Router)
 
@@ -114,6 +115,11 @@ export default new Router({
       path: '/order/orderDetail',
       name: 'orderDetail',
       component: orderDetail
+    },
+    {
+      path: '/history',
+      name: 'history',
+      component: history
     }
   ]
 })

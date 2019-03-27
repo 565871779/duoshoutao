@@ -121,6 +121,8 @@ app.use('/search', require('./module/search'));
 //发现子路由
 app.use('/find', require('./module/find'));
 
+//浏览历史子路由
+app.use('/history', require('./module/history'));
 
 //静态资源托管
 app.use('/uploads', express.static('uploads'));

@@ -130,10 +130,18 @@ export default {
             setTimeout(() => resolve(img), 1000)
           }),
         uploadMaxSize: 3
-      }
+      },
+      gid: this.$route.query.gid,
+      uid: JSON.parse(localStorage.getItem('userId'))
     }
   },
   methods: {
+    addHistory () {
+      let that = this
+      setTimeout(() => {
+        axios.get('http://localhost:8088/detail/addHistory?gid=' + that.gid + '&uid=' + that.uid)
+      }, 5000)
+    },
     formatPrice () {
       return '¥' + (this.goods.price / 1).toFixed(2)
     },
@@ -189,6 +197,7 @@ export default {
   },
   created () {
     this.getGoodsDetail()
+    this.addHistory()
   }
 }
 </script>
