@@ -2,13 +2,25 @@ const express = require('express');
 const router = express.Router();
 router.post('/',function(req, res) {
     let data = req.body;
+    let param;
+    let sql;
     console.log(data)
-    let sql = 'SELECT * FROM user where uname = ?'
-    conn.query(sql,data.uname, function(err, result){
+    if (data.uname){
+        sql = 'SELECT * FROM user where uname = ?'
+        param = data.uname
+    } else {
+        sql = 'SELECT * FROM user where phone = ?'
+        param = data.phone
+    }
+    conn.query(sql,param, function(err, result){
         if(err){
             console.log(err)
 			res.json({r:"数据库错误"})
 			return;
+        }
+        if (result.length === 0) {
+            res.json({r:'no_user'});
+            return
         }
         if(data.password !== result[0].password){
             res.json({r:'p_err'});

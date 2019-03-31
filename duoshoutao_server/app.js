@@ -14,7 +14,7 @@ const app = express();
 /* 模块引用部分结束位置 */
 //定义各种参数
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+    res.header("Access-Control-Allow-Origin", "*"  );
     res.header("Access-Control-Allow-Credentials", true);
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -123,6 +123,12 @@ app.use('/find', require('./module/find'));
 
 //浏览历史子路由
 app.use('/history', require('./module/history'));
+
+//商家注册子路由
+app.use('/admin/regist', require('./module/admin/regist'));
+
+//保存商店子路由
+app.use('/admin/saveStore', require('./module/admin/saveStore'));
 
 //静态资源托管
 app.use('/uploads', express.static('uploads'));
