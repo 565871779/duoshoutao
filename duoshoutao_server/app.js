@@ -127,8 +127,17 @@ app.use('/history', require('./module/history'));
 //商家注册子路由
 app.use('/admin/regist', require('./module/admin/regist'));
 
+//商家登陆子路由
+app.use('/admin/login', require('./module/admin/login'));
+
 //保存商店子路由
 app.use('/admin/saveStore', require('./module/admin/saveStore'));
+
+//获取店铺信息子路由
+app.use('/admin/store', require('./module/admin/store'));
+
+//个人中心子路由
+app.use('/admin/userCenter', require('./module/admin/userCenter'));
 
 //静态资源托管
 app.use('/uploads', express.static('uploads'));

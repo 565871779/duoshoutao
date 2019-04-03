@@ -13,7 +13,14 @@ Vue.prototype.$axios = axios
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
-
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login') return next()
+  if (!localStorage.getItem('userId')) {
+    next('/login')
+  } else {
+    next()
+  }
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

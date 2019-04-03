@@ -7,23 +7,27 @@
       text-color="#8dacc4"
       active-text-color="#fff"
       unique-opened
+      :default-openeds="defaultOpen"
     >
       <template v-for="item in menus">
         <template v-if="item.children">
-          <el-submenu :index="`${item.id}`" :key="item.id">
+          <el-submenu :index="`${item.value}`" :key="item.id">
             <template slot="title">
               <i :class="`fa ${icons[item.id-1]}`"></i>
               {{ item.name }}
             </template>
             <el-menu-item
               v-for="subItem in item.children"
-              :key="subItem.id"
-              :index="`${subItem.value}`"
-            >{{ subItem.name }}</el-menu-item>
+              :key="subItem.sid"
+              :index="`${subItem.sid}`"
+              @click="linkTo(subItem.sid)"
+              >
+            {{ subItem.sname }}
+            </el-menu-item>
           </el-submenu>
         </template>
         <template v-else>
-          <el-menu-item :index="`${item.value}`" :key="item.id">
+          <el-menu-item :index="`${item.value}`" :key="item.id" @click="link(item.value)">
             <i :class="`fa ${icons[item.id-1]}`"></i>
             {{ item.name }}
           </el-menu-item>
@@ -46,13 +50,18 @@ export default {
       {
         id: 2,
         value: 'goods',
-        name: '商品管理'
+        name: '商品管理',
+        children: [
+        ]
       },
       {
         id: 3,
         value: 'order',
         name: '订单管理'
-      }]
+      }],
+      uid: JSON.parse(localStorage.getItem('userId')),
+      sid: this.$route.query.sid,
+      defaultOpen: ['1']
     }
   },
   computed: {
@@ -60,14 +69,33 @@ export default {
   methods: {
     setMenuActive () {
       console.log(location.href)
-      if (location.href.includes('goods')) {
+      if (location.href.includes('goodsList')) {
         return 'goods'
       } else if (location.href.includes('order')) {
         return 'order'
       } else {
         return 'store'
       }
+    },
+    getStoreList () {
+      this.$axios.get('http://localhost:8088/admin/store/getStoreList?uid=' + this.uid)
+        .then((res) => {
+          let data = res.data.r
+          console.log(data)
+          this.menus[1].children = data
+          console.log(this.menus[1])
+        })
+    },
+    linkTo (id) {
+      this.$router.push('/home/goodsList?sid=' + id)
+      this.$emit('clickTab', id)
+    },
+    link (name) {
+      this.$router.push('/home/' + name)
     }
+  },
+  mounted () {
+    this.getStoreList()
   }
 }
 </script>

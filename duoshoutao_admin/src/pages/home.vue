@@ -1,14 +1,16 @@
 <template>
   <div class="root">
     <div class="line"></div>
-    <el-header>剁手淘商家管理系统</el-header>
+    <Header></Header>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import Header from '@/components/header'
 export default {
   components: {
+    Header
   },
   data () {
     return {

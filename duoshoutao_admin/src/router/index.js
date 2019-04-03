@@ -5,7 +5,10 @@ import home from '@/pages/home'
 import regist from '@/pages/regist'
 import store from '@/pages/store'
 import storeEdit from '@/pages/storeEdit'
+import goodsEdit from '@/pages/goodsEdit'
 import goodsList from '@/pages/goods'
+import userCenter from '@/pages/userCenter'
+import updatePassword from '@/pages/updatePassword'
 
 Vue.use(Router)
 
@@ -19,16 +22,15 @@ export default new Router({
     },
     {
       path: '/home',
-      name: 'home',
       component: home,
       children: [
         {
-          path: '/',
+          path: 'store',
           component: store,
           name: 'store'
         },
         {
-          path: '/goodsList',
+          path: 'goodsList',
           component: goodsList,
           name: 'goodsList'
         }
@@ -43,6 +45,21 @@ export default new Router({
       path: '/storeEdit',
       name: 'storeEdit',
       component: storeEdit
+    },
+    {
+      path: '/goodsEdit',
+      name: 'goodsEdit',
+      component: goodsEdit
+    },
+    {
+      path: '/userCenter',
+      name: 'userCenter',
+      component: userCenter
+    },
+    {
+      path: '/updatePaw',
+      name: 'updatePassword',
+      component: updatePassword
     }
   ]
 })

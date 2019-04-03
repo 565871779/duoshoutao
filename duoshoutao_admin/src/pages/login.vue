@@ -5,8 +5,8 @@
         <strong>剁手掏</strong>商家管理系统
       </div>
       <el-form ref="loginForm" :model="login" :rules="loginRules">
-        <el-form-item prop="phone">
-          <el-input placeholder="请输入手机号" v-model="login.phone" clearable></el-input>
+        <el-form-item prop="name">
+          <el-input placeholder="请输入用户名" v-model="login.name" clearable></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <el-input placeholder="请输入密码" type="password" v-model="login.password" clearable>
@@ -29,14 +29,13 @@ export default {
   data () {
     return {
       login: {
-        phone: '13668409856',
+        name: 'a123456',
         password: ''
       },
       checked: false,
       loginRules: {
-        phone: [
-          {required: true, message: '请输入您的登录手机号', trigger: 'blur'},
-          { type: 'string', pattern: /^((1[3-8][0-9])+\d{8})$/, message: '请输入正确的手机号码格式', trigger: 'blur' }
+        name: [
+          {required: true, message: '请输入您的用户名', trigger: 'blur'}
         ],
         password: [
           {required: true, message: '请输入您的密码', trigger: 'blur'}
@@ -72,7 +71,7 @@ export default {
     })
   },
   snedLogin () {
-    this.$axios.post('http://localhost:8088/login', this.login).then(res => {
+    this.$axios.post('http://localhost:8088/admin/login', this.login).then(res => {
       console.log(res)
       let data = res.data
       localStorage.setItem('userId', data.uid)
@@ -81,7 +80,7 @@ export default {
         type: 'success'
       })
       setTimeout(() => {
-        this.$router.push('./home')
+        this.$router.push('./home/store')
       }, 1000)
     })
   }},
