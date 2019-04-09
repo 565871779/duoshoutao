@@ -67,11 +67,12 @@ app.get('/coder', (req, res) => {
     var captcha = svgCaptcha.create({noise:4,ignoreChars: '0o1i', size:1,background: '#cc9966',height:35, width:80});
     //把生成的验证码存到session里面,方便判断输入的验证码是否正确
 	req.session.coder = captcha.text;
-	// 使用ejs等模板时如果报错 res.type('html')
-	res.type('svg'); 
+    // 使用ejs等模板时如果报错 res.type('html')
+    console.log(req.session.coder)
+    res.type('svg'); 
 	res.status(200).send(captcha.data);   
 });
-
+ 
 // 上传图片接口
 app.post('/uploads', upload.array('images', 1000), (req ,res)=>{
     console.log(req.files);

@@ -38,14 +38,32 @@ router.get('/getGoodsInfo', function(req,res) {
         res.json({
             r: result
         })
-    })
-		
+    })	
 });
+
+
 router.get('/getGoods', function(req,res) {
 	let data = req.query;
 	console.log(data);
     let sql1 = `SELECT * FROM goods where gid = ?`;
     conn.query(sql1, data.gid, function(err, result){
+        if(err){
+            console.log(err)
+			res.json({r:"数据库错误"})
+			return;
+        }
+        res.json({
+            r: result
+        })
+    })
+		
+});
+
+router.get('/getOrderInfo', function(req,res) {
+	let data = req.query;
+	console.log(data);
+    let sql1 = 'select o.oid,o.submitTime,u.uname,u.phone,o.status,g.gname,o.num,g.price,a.detailadd,a.saddress from `order` as o left join goods as g on o.gid = g.gid left join address as a on o.aid = a.aid left join user as u on o.uid = u.uid where o.status != 3 and o.status != 2 and g.sid = 1;';
+    conn.query(sql1, data.sid, function(err, result){
         if(err){
             console.log(err)
 			res.json({r:"数据库错误"})

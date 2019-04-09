@@ -7,10 +7,9 @@
       text-color="#8dacc4"
       active-text-color="#fff"
       unique-opened
-      :default-openeds="defaultOpen"
     >
       <template v-for="item in menus">
-        <template v-if="item.children">
+        <template v-if="item.children && item.value === 'goods'">
           <el-submenu :index="`${item.value}`" :key="item.id">
             <template slot="title">
               <i :class="`fa ${icons[item.id-1]}`"></i>
@@ -21,6 +20,22 @@
               :key="subItem.sid"
               :index="`${subItem.sid}`"
               @click="linkTo(subItem.sid)"
+              >
+            {{ subItem.sname }}
+            </el-menu-item>
+          </el-submenu>
+        </template>
+        <template v-else-if="item.children && item.value === 'order'">
+          <el-submenu :index="`${item.value}`" :key="item.id">
+            <template slot="title">
+              <i :class="`fa ${icons[item.id-1]}`"></i>
+              {{ item.name }}
+            </template>
+            <el-menu-item
+              v-for="subItem in item.children"
+              :key="subItem.sid"
+              :index="`o${subItem.sid}`"
+              @click="toOrder(subItem.sid)"
               >
             {{ subItem.sname }}
             </el-menu-item>
@@ -57,7 +72,9 @@ export default {
       {
         id: 3,
         value: 'order',
-        name: '订单管理'
+        name: '订单管理',
+        children: [
+        ]
       }],
       uid: JSON.parse(localStorage.getItem('userId')),
       sid: this.$route.query.sid,
@@ -68,11 +85,10 @@ export default {
   },
   methods: {
     setMenuActive () {
-      console.log(location.href)
       if (location.href.includes('goodsList')) {
-        return 'goods'
+        return this.$route.query.sid
       } else if (location.href.includes('order')) {
-        return 'order'
+        return 'o' + this.$route.query.sid
       } else {
         return 'store'
       }
@@ -83,11 +99,16 @@ export default {
           let data = res.data.r
           console.log(data)
           this.menus[1].children = data
+          this.menus[2].children = data
           console.log(this.menus[1])
         })
     },
     linkTo (id) {
       this.$router.push('/home/goodsList?sid=' + id)
+      this.$emit('clickTab', id)
+    },
+    toOrder (id) {
+      this.$router.push('/home/order?sid=' + id)
       this.$emit('clickTab', id)
     },
     link (name) {

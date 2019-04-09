@@ -11,4 +11,7 @@ export default {
 </script>
 
 <style>
+.van-toast {
+  text-align: center
+}
 </style>

@@ -1,6 +1,16 @@
 <template>
   <div>
-    <img class="user-poster" src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png">
+    <header>
+    <img class="user-poster" src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/mine/login_my_main.jpg">
+    <div class="login" v-if="userName">
+      <img :src="uhead" alt="">
+      <p>{{userName}}</p>
+    </div>
+    <div class="login" v-else @click="toLogin()">
+      <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/mine/login_logo_before_my_main.png" alt="">
+      <p>登录/注册</p>
+    </div>
+    </header>
     <van-row class="user-links">
       <van-col span="6">
         <van-icon name="pending-payment"  @click="linkTo"/>
@@ -35,6 +45,7 @@
 
 <script>
 import { Row, Col, Icon, Cell, CellGroup } from 'vant'
+import axios from 'axios'
 export default {
   components: {
     [Row.name]: Row,
@@ -43,15 +54,57 @@ export default {
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup
   },
+  data () {
+    return {
+      uid: JSON.parse(localStorage.getItem('userId')),
+      userName: '',
+      uhead: ''
+    }
+  },
   methods: {
     linkTo () {
       this.$router.push('/order/myorder')
+    },
+    getUserInfo () {
+      axios.get('http://localhost:8088/userCenter/getUserInfo?uid=' + this.uid).then((res) => {
+        console.log(res)
+        let data = res.data.r[0]
+        this.userName = data.uname
+        this.uhead = data.uhead
+      })
+    },
+    toLogin () {
+      this.$router.push('/login')
     }
+  },
+  mounted () {
+    this.getUserInfo()
   }
 }
 </script>
 
 <style lang="scss">
+header {
+  position: relative;
+  .user-poster {
+    width: 100%;
+    height: 3rem;
+  }
+  .login {
+    position: absolute;
+    left: calc(50% - 0.6rem);
+    top: .5rem;
+    img {
+      width: 1.2rem;
+      border-radius: 50%;
+    }
+    p {
+      color: #fff;
+      text-align: center;
+      margin-top: .3rem;
+    }
+  }
+}
 .user {
   &-poster {
     width: 100%;
@@ -70,5 +123,6 @@ export default {
       font-size: 24px;
     }
   }
+
 }
 </style>

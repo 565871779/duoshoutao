@@ -11,7 +11,7 @@
         <div class="button">
           <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-class/chongzhi.png" alt>
         </div>
-        <p>重置</p>
+        <p>充值</p>
       </div>
       <div class="item">
         <div class="button">
@@ -32,7 +32,7 @@
         <p>订单状态</p>
       </div>
       <div class="item">
-        <div class="button">
+        <div class="button" @click="$router.push('/history')">
           <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-class/history.png" alt>
         </div>
         <p>浏览历史</p>

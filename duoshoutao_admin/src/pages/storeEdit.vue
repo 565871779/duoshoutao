@@ -20,9 +20,11 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item size="large">
+      <el-form-item size="large" v-if="sid">
+        <el-button type="primary" @click="save">保存</el-button>
+      </el-form-item>
+      <el-form-item size="large" v-else>
         <el-button type="primary" @click="onSubmit">立即创建</el-button>
-        <el-button>取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -38,7 +40,8 @@ export default {
         imageUrl: '',
         detail: ''
       },
-      uid: JSON.parse(localStorage.getItem('userId'))
+      uid: JSON.parse(localStorage.getItem('userId')),
+      sid: this.$route.query.sid
     }
   },
   computed: {},
@@ -61,7 +64,29 @@ export default {
             type: 'success'
           })
           setTimeout(() => {
-            this.$router.push('./home')
+            this.$router.go(-1)
+          }, 1000)
+        }
+      })
+    },
+    save () {
+      let param = {}
+      param.sname = this.sizeForm.name
+      param.detail = this.sizeForm.detail
+      param.sid = this.sid
+      param.imageUrl = this.sizeForm.imageUrl
+      this.$axios.post('http://localhost:8088/admin/saveStore/update', param).then((res) => {
+        console.log(res)
+        if (res.data.r === 'user_existed') {
+          this.$message.error('店铺名已存在')
+        }
+        if (res.data.r === 'ok') {
+          this.$message({
+            message: '保存店铺成功',
+            type: 'success'
+          })
+          setTimeout(() => {
+            this.$router.go(-1)
           }, 1000)
         }
       })
@@ -81,13 +106,29 @@ export default {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
       return isJPG && isLt2M
+    },
+    getStoreInfo () {
+      this.$axios.get('http://localhost:8088/admin/saveStore/getStoreInfo?sid=' + this.sid)
+        .then(res => {
+          console.log(res)
+          let data = res.data.r[0]
+          this.sizeForm.name = data.sname
+          this.sizeForm.imageUrl = data.imageUrl
+          this.sizeForm.detail = data.detail
+        })
     }
   },
-  mounted () {}
+  mounted () {
+    if (this.sid) {
+      this.getStoreInfo()
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
 .root {
+  width: 40vw;
+    margin: 20vh auto;
   .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;

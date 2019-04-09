@@ -2,11 +2,11 @@
   <div class="root">
     <Aside></Aside>
     <div class="content">
-             <el-button type="primary">新增店铺</el-button>
+             <el-button type="primary" @click="toStoreEdit">新增店铺</el-button>
         <div class="body" v-for="(item,index) in storeList" :key="index">
             <header>
                 <img :src="item.imageUrl" alt="">
-                <el-button type="primary" icon="el-icon-edit" circle></el-button>
+                <el-button type="primary" icon="el-icon-edit" @click="toStoreEdit(item.sid)" circle></el-button>
             </header>
             <div class="items">
                 <p>店铺名称:</p>
@@ -58,6 +58,21 @@ export default {
           let data = res.data.r
           this.storeList = data
         })
+    },
+    toStoreEdit (id) {
+      if (this.storeList.length >= 3) {
+        this.$message({
+          showClose: true,
+          message: '最多开设3个店铺哦',
+          type: 'error'
+        })
+        return
+      }
+      if (id) {
+        this.$router.push('/storeEdit?sid=' + id)
+      } else {
+        this.$router.push('/storeEdit')
+      }
     }
   },
   mounted () {

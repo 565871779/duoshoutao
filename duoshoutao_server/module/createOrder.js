@@ -87,6 +87,23 @@ router.post('/pay', function(req, res){
     })
 
 })
+router.post('/confirmRece', function(req, res){
+    let par = req.body;
+    let sql = "update `order` set status = 5 where oid = ?";
+    conn.query(sql, [par.oid], function(err, result) {
+        if(err) {
+            console.log(err)
+            res.json({
+                r:'数据库错误'
+            })
+            return
+        }
+        res.json({
+            r: 'ok'
+        })
+    })
+
+})
 router.get('/getDetail', function(req, res){
     let oid = req.query.oid;
     let sql = "select * from  goods as g left join `order` as o on o.gid = g.gid where oid= ?;";

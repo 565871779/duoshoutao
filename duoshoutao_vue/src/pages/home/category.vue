@@ -19,6 +19,7 @@
             <div class="item"></div>
           </div> -->
            <div class="head">
+             <img :src="categoryArr[chosedInd].img" alt="">
           </div>
            <vue-better-scroll class="wrapper"
                          ref="scroll"
@@ -47,37 +48,48 @@ export default {
       chosedName: '男装',
       categoryArr: [
         {
-          name: '精品男装'
+          name: '精品男装',
+          img: 'https://img.alicdn.com/simba/img/TB1WhQTO7voK1RjSZPfSutPKFXa.jpg'
         },
         {
-          name: '精致女装'
+          name: '精致女装',
+          img: 'https://img.alicdn.com/simba/img/TB1aRaVLxTpK1RjSZFKSuu2wXXa.jpg'
         },
         {
-          name: '零食饮料'
+          name: '零食饮料',
+          img: 'https://aecpm.alicdn.com/tfscom/TB1fkNhBYvpK1RjSZPiXXbmwXXa.jpg'
         },
         {
-          name: '家用电器'
+          name: '家用电器',
+          img: 'https://img.alicdn.com/simba/img/TB1WhQTO7voK1RjSZPfSutPKFXa.jpg'
         },
         {
-          name: '护肤美妆'
+          name: '护肤美妆',
+          img: 'https://img.alicdn.com/simba/img/TB1aRaVLxTpK1RjSZFKSuu2wXXa.jpg'
         },
         {
-          name: '鲜花宠物'
+          name: '鲜花宠物',
+          img: 'https://img.alicdn.com/simba/img/TB1WhQTO7voK1RjSZPfSutPKFXa.jpg'
         },
         {
-          name: '生鲜水果'
+          name: '生鲜水果',
+          img: 'https://img.alicdn.com/simba/img/TB1aRaVLxTpK1RjSZFKSuu2wXXa.jpg'
         },
         {
-          name: '鞋包配饰'
+          name: '鞋包配饰',
+          img: 'https://img.alicdn.com/simba/img/TB1WhQTO7voK1RjSZPfSutPKFXa.jpg'
         },
         {
-          name: '运动户外'
+          name: '运动户外',
+          img: 'https://aecpm.alicdn.com/tfscom/TB1fkNhBYvpK1RjSZPiXXbmwXXa.jpg'
         },
         {
-          name: '图书音像'
+          name: '图书音像',
+          img: 'https://img.alicdn.com/simba/img/TB1aRaVLxTpK1RjSZFKSuu2wXXa.jpg'
         },
         {
-          name: '手机数码'
+          name: '手机数码',
+          img: 'https://img.alicdn.com/simba/img/TB1WhQTO7voK1RjSZPfSutPKFXa.jpg'
         }
       ],
       // 这个配置用于做上拉加载功能，默认为 false。当设置为 true 或者是一个 Object 的时候，可以开启上拉加载，可以配置离底部距离阈值（threshold）来决定开始加载的时机
@@ -149,31 +161,52 @@ export default {
     display: flex;
     justify-content: space-between;
     .left {
-      width: 25vw;
-      max-height: 100vh;
+      width: 27vw;
+      max-height: calc(100vh - 1.2rem);
       overflow: scroll;
       div {
-        height: 12.3%;
-        border-bottom: 1px solid #333;
-        width: 100%;
-        text-align: center;
-        line-height: 12.3vh;
-        color: #666;
-        background: #d6d6d6;
-        font-weight: bold;
-        font-size: .34rem
+            display: block;
+            overflow: hidden;
+            font-size: 14px;
+            line-height: 1.4;
+            -webkit-user-select: none;
+            user-select: none;
+            color: #7d7e80;
+            word-break: break-all;
+            box-sizing: border-box;
+            padding: 20px 12px 20px 9px;
+            background-color: #f8f8f8;
+            border-left: 3px solid transparent;
+            &::after {
+                  content: ' ';
+                  position: absolute;
+                  pointer-events: none;
+                  box-sizing: border-box;
+                  top: -50%;
+                  left: -50%;
+                  right: -50%;
+                  bottom: -50%;
+                  -webkit-transform: scale(0.5);
+                  transform: scale(0.5);
+                  border: 0 solid #ebedf0;
+            }
       }
       .checked {
-        background: #fff;
-        color: orangered;
+            font-weight: 500;
+            color: #323233;
+            border-color: #f44;
+            background-color: #fff;
       }
     }
     .right {
-      width: 75vw;
+      width: 72vw;
+      height: calc(100vh - 1.2rem);
       .head {
         width: 100%;
-        height: 2.5rem;
         background: red;
+        img {
+          width: 100%;
+        }
       }
       .bottom {
         width: 100%;

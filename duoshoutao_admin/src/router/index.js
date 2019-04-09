@@ -9,6 +9,7 @@ import goodsEdit from '@/pages/goodsEdit'
 import goodsList from '@/pages/goods'
 import userCenter from '@/pages/userCenter'
 import updatePassword from '@/pages/updatePassword'
+import order from '@/pages/order'
 
 Vue.use(Router)
 
@@ -33,6 +34,11 @@ export default new Router({
           path: 'goodsList',
           component: goodsList,
           name: 'goodsList'
+        },
+        {
+          path: 'order',
+          component: order,
+          name: 'order'
         }
       ]
     },

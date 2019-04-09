@@ -61,6 +61,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .root {
+  .left {
+    font-size: 30px;
+    color: #f8831e;
+    line-height: 0;
+  }
   .el-dropdown-link {
     cursor: pointer;
     color: #409EFF;

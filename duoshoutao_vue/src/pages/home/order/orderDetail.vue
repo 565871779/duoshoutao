@@ -2,7 +2,10 @@
   <div class="root">
     <header>
       <img src="@/assets/images/order/headimg.png" alt>
-      <p>等待买家付款</p>
+      <p v-if="goods.status === 0">等待买家付款</p>
+      <p v-else-if="goods.status === 1">已支付，等待卖家发货</p>
+      <p v-else-if="goods.status === 4">卖家已发货，等待买家收货</p>
+      <p v-else-if="goods.status === 5">已收货，订单已完成</p>
     </header>
     <van-cell value>
       <template slot="title">
@@ -62,7 +65,8 @@
       </div>
     </div>
     <div class="needPay">
-      <p>需付款</p>
+      <p v-if="goods.status === 0">需付款</p>
+      <p v-else>已付款</p>
       <div>￥{{ totalPrice  }}
       </div>
     </div>
@@ -95,7 +99,7 @@
              </div>
          </div>
     </div>
-    <div class="pay">
+    <div class="pay" v-show="goods.status === 1">
         <van-button round  plain type="danger">付款</van-button>
         <van-button round  plain @click="cancle">取消订单</van-button>
     </div>
@@ -123,7 +127,8 @@ export default {
         submitTime: '',
         price: '',
         time: '',
-        num: ''
+        num: '',
+        status: 1
       },
       totalPrice: ''
     }
@@ -143,6 +148,7 @@ export default {
       this.goods.submitTime = data.submitTime
       this.goods.price = data.price
       this.goods.num = data.num
+      this.goods.status = data.status
       this.goods.time = new Date(data.submitTime / 1).toLocaleString()
       this.totalPrice = (this.goods.price * this.goods.num).toFixed(2)
       this.getAddress()

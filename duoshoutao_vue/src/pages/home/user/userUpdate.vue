@@ -1,5 +1,6 @@
 <template>
-  <div class="root">
+<div>
+  <div class="root" v-if="uid">
       <van-cell is-link>
         <template slot="title">
         <div class="headLeft">
@@ -14,12 +15,15 @@
       <van-cell title="我的收货地址" is-link url="/address/addresslist" />
       <van-cell title="修改手机号" is-link url="/address/updateTel" />
       <van-cell title="修改密码" is-link url="/address/updatePs" />
-      <van-cell title="注销用户" is-link />
+      <van-cell title="注销用户" is-link @click="logout" />
       </van-cell-group>
       <van-popup v-model="showSex" position="bottom">
           <van-picker :columns="sexArr" show-toolbar @cancel="showSex=false" @confirm="changeSex" />
       </van-popup>
     </div>
+    <toLogin v-else></toLogin>
+    </div>
+
 </template>
 <style lang="scss" scoped>
 .root {
@@ -48,19 +52,27 @@
 }
 </style>
 <script>
+import toLogin from '../common/toLogin'
 export default {
-  components: {},
+  components: {
+    toLogin
+  },
   data () {
     return {
       sexArr: ['男', '女'],
       showSex: false,
-      sex: ''
+      sex: '',
+      uid: JSON.parse(localStorage.getItem('userId'))
     }
   },
   computed: {},
   methods: {
     changeSex (val) {
       this.sex = val
+    },
+    logout () {
+      localStorage.removeItem('userId')
+      this.$router.go(0)
     }
   },
   mounted () {}

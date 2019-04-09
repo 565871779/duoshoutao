@@ -261,7 +261,9 @@ export default {
         param.uid = this.uid
         param.submitTime = new Date().getTime()
         param.loseTime = param.submitTime + 1000 * 60 * 5
-        axios.post('http://localhost:8088/createOrder/pay', param).then(this.paySuccess).catch((err) => { console.log(err) })
+        axios.post('http://localhost:8088/createOrder/pay', param)
+          .then(this.paySuccess)
+          .catch((err) => { console.log(err) })
       }
     },
     paySuccess (res) {

@@ -49,13 +49,7 @@
             <van-radio name="0" class="vanradio">女</van-radio>
           </van-radio-group>
         </div>
-        <div class="radiosex">
-          <span>角色</span>
-          <van-radio-group v-model="formdata.role">
-            <van-radio name="1">用户</van-radio>
-            <van-radio name="2">商家</van-radio>
-          </van-radio-group>
-        </div>
+
       </van-cell-group>
       <van-button size="large" @click="register">立即注册</van-button>
     </form>

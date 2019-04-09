@@ -114,7 +114,7 @@ export default {
   .van-card__footer {
     position: absolute;
     left: 2.4rem;
-    top: 1.3rem;
+    bottom: .1rem;
   }
   .content {
     padding-bottom: .3rem;
