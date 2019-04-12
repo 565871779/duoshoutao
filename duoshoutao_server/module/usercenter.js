@@ -71,5 +71,22 @@ router.post('/changePhone', function(req, res){
     })
 })
 
+router.post('/updateHead', function(req, res){
+    let img = req.body.img
+    let uid = req.body.uid
+    let sql = 'update user set uhead = ? where uid = ?;'
+    conn.query(sql,[img, uid], function(err, result) {
+        if(err) {
+            console.log(err)
+            res.json({
+                r:'数据库错误'
+            })
+            return
+        }
+        res.json({
+            r: 'ok'
+        })
+    })
+})
 
 module.exports = router;

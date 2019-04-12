@@ -33,7 +33,7 @@
             验证码:
             <input style="width:60%" type="text" placeholder="请输入验证码" v-model="captchaVal">
           </label>
-          <div v-html="captcha" @click="getCaptcha()"></div>
+          <div v-html="captcha.data" @click="getCaptcha()"></div>
         </div>
       </div>
       <div class="button" @click="login">登   录</div>
@@ -66,6 +66,22 @@ export default {
   methods: {
     login () {
       let param = {}
+      if (!this.uname) {
+        Toast.fail('请输入用户名！')
+        return
+      }
+      if (!this.password) {
+        Toast.fail('请输入密码！')
+        return
+      }
+      if (!this.captchaVal) {
+        Toast.fail('请输入验证码！')
+        return
+      }
+      if (this.captchaVal.toLowerCase() !== this.captcha.value) {
+        Toast.fail('验证码错误！')
+        return
+      }
       param.uname = this.uname
       param.password = this.password
       param.captcha = this.captchaVal
@@ -86,20 +102,20 @@ export default {
       if (res.data.r === 'no_user') {
         Toast.fail({
           mask: false,
-          message: '用户名不存在'
+          message: '用户名不存在！'
         })
         return
       }
       if (res.data.r === 'p_err') {
         Toast.fail({
           mask: false,
-          message: '密码错误'
+          message: '密码错误！'
         })
         return
       }
       Toast.success({
         mask: false,
-        message: '登录成功'
+        message: '登录成功！'
       })
       localStorage.setItem('userId', res.data.uid)
       setTimeout(() => {

@@ -2,11 +2,6 @@ const express = require('express');
 const router = express.Router();
 router.post('/',function(req, res) {
     let data = req.body;
-    console.log(req.session)
-    if(data.captcha.toLowerCase() != req.session.coder.toLowerCase()){
-        res.json({r:'coder_err'});
-        return ;
-    }
     let param;
     let sql;
     console.log(data)

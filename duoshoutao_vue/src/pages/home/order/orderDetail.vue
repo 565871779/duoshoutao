@@ -99,7 +99,7 @@
              </div>
          </div>
     </div>
-    <div class="pay" v-show="goods.status === 1">
+    <div class="pay" v-show="goods.status === 0">
         <van-button round  plain type="danger">付款</van-button>
         <van-button round  plain @click="cancle">取消订单</van-button>
     </div>

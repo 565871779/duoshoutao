@@ -63,7 +63,7 @@ export default {
         display: flex;
         justify-content: space-between;
         div {
-            width: 20%;
+            width: 1.5rem;
             line-height: 1.9rem;
             height: 1.2rem;
             text-align: center;

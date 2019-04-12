@@ -68,9 +68,8 @@ app.get('/coder', (req, res) => {
     //把生成的验证码存到session里面,方便判断输入的验证码是否正确
 	req.session.coder = captcha.text;
     // 使用ejs等模板时如果报错 res.type('html')
-    console.log(req.session.coder)
     res.type('svg'); 
-	res.status(200).send(captcha.data);   
+	res.status(200).send({data:captcha.data, value: captcha.text});   
 });
  
 // 上传图片接口

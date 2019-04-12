@@ -194,7 +194,7 @@ export default {
     return {
       uid: JSON.parse(localStorage.getItem('userId')),
       list: [],
-      active: ''
+      active: this.$route.query.active
     }
   },
   computed: {},
