@@ -102,6 +102,8 @@ app.use('/category',require('./module/category'));
 
 //商品详情界面子路由
 app.use('/detail',require('./module/detail'));
+//商店首页界面子路由
+app.use('/store',require('./module/store'));
 
 //立即购买创建订单子路由
 app.use('/createOrder',require('./module/createOrder'));

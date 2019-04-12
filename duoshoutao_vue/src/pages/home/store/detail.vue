@@ -18,9 +18,9 @@
     </van-cell-group>
 
     <van-cell-group class="goods-cell-group">
-      <van-cell value="进入店铺" icon="shop-o" is-link>
+      <van-cell value="进入店铺" icon="shop-o" is-link  :to="'/store?sid=' + sid">
         <template slot="title">
-          <span class="van-cell-text">有赞的店</span>
+          <span class="van-cell-text">{{sname}}</span>
           <van-tag class="goods-tag" type="danger">官方</van-tag>
         </template>
       </van-cell>
@@ -132,7 +132,9 @@ export default {
         uploadMaxSize: 3
       },
       gid: this.$route.query.gid,
-      uid: JSON.parse(localStorage.getItem('userId'))
+      uid: JSON.parse(localStorage.getItem('userId')),
+      sid: '',
+      sname: ''
     }
   },
   methods: {
@@ -176,6 +178,7 @@ export default {
     },
     getGoodsDetailSuccess (res) {
       this.goods = res.data.r[0]
+      this.sid = this.goods.sid
       let data = this.skuData
       let list = data.sku.list
       let inventory = this.goods.inventory
@@ -193,6 +196,14 @@ export default {
         list[i].price = (this.goods.price * 100).toFixed(2)
       }
       this.skuData = data
+      this.getStoreName()
+    },
+    getStoreName () {
+      axios.get('http://localhost:8088/store/getStoreName?sid=' + this.sid)
+        .then(res => {
+          console.log(res)
+          this.sname = res.data.r[0].sname
+        })
     }
   },
   created () {

@@ -19,6 +19,7 @@ import search from '@/pages/home/search/search'
 import createOrder from '@/pages/home/order/buyToCreateOrder'
 import orderDetail from '@/pages/home/order/orderDetail'
 import history from '@/pages/home/history/history'
+import store from '@/pages/home/store/home'
 
 Vue.use(Router)
 
@@ -120,6 +121,11 @@ export default new Router({
       path: '/history',
       name: 'history',
       component: history
+    },
+    {
+      path: '/store',
+      name: 'store',
+      component: store
     }
   ]
 })
