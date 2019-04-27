@@ -35,9 +35,7 @@
     </van-cell-group>
 
     <van-cell-group>
-      <van-cell icon="points" title="我的积分" is-link />
       <van-cell icon="gold-coin-o" title="我的优惠券" is-link />
-      <van-cell icon="gift-o" title="我收到的礼物" is-link />
       <van-cell icon="discount" title="设置" is-link url="/userUpdate" />
     </van-cell-group>
   </div>
@@ -106,7 +104,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 header {
   position: relative;
   .user-poster {

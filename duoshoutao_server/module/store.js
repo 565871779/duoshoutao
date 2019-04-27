@@ -143,4 +143,22 @@ router.get('/getStoreName', function(req, res){
         })
     })
 })
+
+router.get('/getCollectList', function(req, res){
+    let uid = req.query.uid; 
+    let sql = 'select * from scollect where uid = ? and status = 1'
+    conn.query(sql, uid, function(err, result) {
+        if(err) {
+            console.log(err)
+            res.json({
+                r:'数据库错误'
+            })
+            return
+        }
+        res.json({
+            r: result
+        })
+    })
+})
+
 module.exports = router;

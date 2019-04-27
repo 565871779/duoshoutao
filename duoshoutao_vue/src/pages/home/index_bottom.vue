@@ -1,6 +1,6 @@
 <template>
-  <div class="bottom">
-    <div class="buttons">
+   <div class="bottom">
+    <!-- <div class="buttons">
       <div class="item">
         <div class="button">
           <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-class/cuxiao.png" alt>
@@ -43,13 +43,7 @@
         </div>
         <p>我的关注</p>
       </div>
-      <div class="item">
-        <div class="button">
-          <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/index-class/life.png" alt>
-        </div>
-        <p>生活娱乐</p>
-      </div>
-    </div>
+    </div> -->
     <div class="guang">逛</div>
     <div class="others">
       <div class="content">
@@ -158,8 +152,9 @@ export default {
   }
   .guang {
     text-align: center;
-    font-size: 0.4rem;
+    font-size: 0.5rem;
     color: orange;
+    margin: .2rem auto;
   }
   .content {
     padding-bottom: 1.2rem;

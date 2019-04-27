@@ -76,7 +76,7 @@ export default {
       }
     },
     onDelete () {
-      Toast('delete')
+      Toast('删除收货地址成功')
     },
     onChangeDetail (val) {
       if (val) {

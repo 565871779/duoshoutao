@@ -141,8 +141,11 @@ export default {
     addHistory () {
       let that = this
       setTimeout(() => {
-        axios.get('http://localhost:8088/detail/addHistory?gid=' + that.gid + '&uid=' + that.uid)
+        that.pushHistory()
       }, 5000)
+    },
+    pushHistory () {
+      axios.get('http://localhost:8088/detail/addHistory?gid=' + this.gid + '&uid=' + this.uid)
     },
     formatPrice () {
       return '¥' + (this.goods.price / 1).toFixed(2)

@@ -1,6 +1,6 @@
 <template>
   <div class="root">
-     <div class="item" v-for="(item,index) in findList" :key="index">
+     <div class="item" @click="$router.push('/store?sid=' + item.sid)" v-for="(item,index) in findList" :key="index">
        <div class="header">
          <p>您可能感兴趣的内容</p>
          <div class="close">

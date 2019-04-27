@@ -141,6 +141,9 @@ app.use('/admin/store', require('./module/admin/store'));
 //个人中心子路由
 app.use('/admin/userCenter', require('./module/admin/userCenter'));
 
+//订单管理子路由
+app.use('/admin/order', require('./module/admin/order'));
+
 //静态资源托管
 app.use('/uploads', express.static('uploads'));
 app.use(express.static('static'));

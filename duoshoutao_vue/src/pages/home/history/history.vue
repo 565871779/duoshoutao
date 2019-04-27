@@ -73,7 +73,6 @@ export default {
       console.log(res)
       let data = res.data.r
       let set = new Set()
-      console.log(typeof data[28].gid)
       for (let i = 0; i < data.length; i++) {
         if (data[i].gid) {
           set.add(data[i])

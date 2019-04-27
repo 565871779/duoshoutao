@@ -61,6 +61,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 .root {
+  // .el-header {
+  //   position: fixed;
+  //   top: 0;
+  //   left: 0;
+  //   width: 100vw;
+  // }
+  background: #fff;
   .left {
     font-size: 30px;
     color: #f8831e;

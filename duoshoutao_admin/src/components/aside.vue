@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     setMenuActive () {
-      if (location.href.includes('goodsList')) {
+      if (location.href.includes('goods')) {
         return this.$route.query.sid
       } else if (location.href.includes('order')) {
         return 'o' + this.$route.query.sid

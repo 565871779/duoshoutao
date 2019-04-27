@@ -41,8 +41,8 @@ router.get('/addHistory', function(req, res){
 router.post('/addShopCar', function(req, res){
     let gid = req.body.gid;
     let uid = req.body.uid;
-    let creatTime = req.body.creatTime;
-    let loseTime = req.body.loseTime;
+    let creatTime = req.body.creatTime * 1;
+    let loseTime = req.body.loseTime * 1;
     let number = req.body.number;
     let sql = "insert into shopcar (uid,gid,creatTime,loseTime,number) values (?,?,?,?,?)";
     conn.query(sql, [ uid, gid, creatTime, loseTime,number], function(err, result) {

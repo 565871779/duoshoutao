@@ -71,7 +71,9 @@ export default {
       this.$router.push('/order/createOrder?id=' + this.checkedGoods)
     },
     getGoodsList () {
-      axios.get('http://localhost:8088/shopCar/getShopCarList?uid=' + this.uid).then(this.getGoodsListSuccess).catch()
+      axios.get('http://localhost:8088/shopCar/getShopCarList?uid=' + this.uid)
+        .then(this.getGoodsListSuccess)
+        .catch(err => console.log(err))
     },
     getGoodsListSuccess (res) {
       this.goods = res.data.r
@@ -93,10 +95,13 @@ export default {
     },
     delectItemSuccess (res) {
       console.log(res)
+      if (res.data.r === 'ok') {
+        this.$toast('删除成功！')
+      }
       this.getGoodsList()
     }
   },
-  mounted () {
+  created () {
     this.uid = JSON.parse(localStorage.getItem('userId'))
     this.getGoodsList()
   }

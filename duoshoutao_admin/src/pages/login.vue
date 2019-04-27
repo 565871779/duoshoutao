@@ -20,6 +20,25 @@
         </el-form-item>
       </el-form>
     </div>
+
+    <!-- 粒子漂浮物 -->
+    <vue-particles
+      :particle-opacity="0.7"
+      :particles-number="30"
+      :particle-size="5"
+      :lines-width="2"
+      :line-linked="true"
+      :line-opacity="0.4"
+      :lines-distance="150"
+      :move-speed="3"
+      :hover-effect="true"
+      :click-effect="true"
+      click-mode="push"
+      color="#fff"
+      shape-type="star"
+      hover-mode="grab"
+      lines-color="#fff"
+    />
   </div>
 </template>
 
@@ -94,7 +113,8 @@ export default {
   position: fixed;
   top: 0px;
   left: 0px;
-  background-color: #f0f2f4;
+  background: url('http://duoshoutao.oss-cn-beijing.aliyuncs.com/mine/login_bg.jpg') -20% 10%;
+  background-size: contain;
   .login-mian {
     width: 400px;
     margin: auto;

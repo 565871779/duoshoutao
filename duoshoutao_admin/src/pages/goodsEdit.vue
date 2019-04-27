@@ -1,11 +1,22 @@
 <template>
-  <div class="root">
-    <el-form ref="sizeForm" :rules="rules" :model="sizeForm" label-width="80px" size="mini">
+<div class="root">
+  <Header></Header>
+  <Aside @clickTab="refresh"></Aside>
+  <div class="content">
+    <div class="title">商品管理</div>
+    <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <span v-if="gid">商品信息修改</span>
+          <span v-else>新增商品</span>
+
+        </div>
+        <div class="text item">
+          <el-form ref="sizeForm" :rules="rules" :model="sizeForm" label-width="80px" size="mini">
       <el-form-item label="商品名称"  prop="name">
         <el-input v-model="sizeForm.name" placeholder="请输入商品名称"></el-input>
       </el-form-item>
       <el-form-item label="商品描述" prop="detail">
-        <el-input v-model="sizeForm.detail" placeholder="请输入商品描述"></el-input>
+        <el-input type="textarea" v-model="sizeForm.detail" style="width:366px"></el-input>
       </el-form-item>
       <el-form-item label="价格" prop="price">
         <el-input v-model.number="sizeForm.price" placeholder="请输入商品价格"></el-input>
@@ -41,12 +52,23 @@
         <el-button>取消</el-button>
       </el-form-item>
     </el-form>
+        </div>
+      </el-card>
+
   </div>
+</div>
+
 </template>
 
 <script>
+import Header from '@/components/header'
+import Aside from '@/components/aside'
+
 export default {
-  components: {},
+  components: {
+    Header,
+    Aside
+  },
   data () {
     return {
       sizeForm: {
@@ -172,6 +194,9 @@ export default {
       console.log(res)
       this.sizeForm.imageUrl = URL.createObjectURL(file.raw)
     },
+    refresh () {
+      this.sid = this.$route.query.sid
+    },
     beforeAvatarUpload (file) {
       const isJPG = file.type === 'image/jpeg'
       const isLt2M = file.size / 1024 / 1024 < 2
@@ -207,8 +232,17 @@ export default {
 </script>
 <style lang="scss" scoped>
 .root {
-    width: 40vw;
-    margin: 20vh auto;
+    width: 100%;
+    // margin: 20vh auto;
+    .content {
+      margin: 0 250px;
+      .title {
+      font-size: 18px;
+      height: 50px;
+      line-height: 50px;
+      font-weight: bold;
+    }
+    }
   .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
@@ -219,17 +253,21 @@ export default {
   .avatar-uploader .el-upload:hover {
     border-color: #409eff;
   }
+  /deep/ .el-input__inner {
+    width: 365px;
+  }
   .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 60px;
-    height: 60px;
-    line-height: 60px;
+    width: 130px;
+    height: 130px;
+    line-height: 130px;
     text-align: center;
+    border: 1px dashed;
   }
   .avatar {
-    width: 60px;
-    height: 60px;
+    width: 130px;
+    height: 130px;
     display: block;
   }
 }

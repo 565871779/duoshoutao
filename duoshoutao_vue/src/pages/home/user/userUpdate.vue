@@ -74,6 +74,19 @@ export default {
   methods: {
     changeSex (val) {
       this.sex = val
+      let par = {}
+      par.usex = val === '男' ? 1 : 0
+      par.uid = this.uid
+      axios.post('http://localhost:8088/userCenter/changeSex', par)
+        .then(res => {
+          console.log(res)
+          if (res.data.r === 'ok') {
+            this.$toast.success({
+              mask: true,
+              message: '修改性别成功'
+            })
+          }
+        })
     },
     logout () {
       localStorage.removeItem('userId')
@@ -95,16 +108,17 @@ export default {
         console.log(err)
       })
     },
-    getHead () {
+    getUserInfo () {
       axios.get('http://localhost:8088/userCenter/getUserInfo?uid=' + this.uid).then((res) => {
         console.log(res)
         let data = res.data.r[0]
         this.imgUrl = data.uhead
+        this.sex = data.usex === 1 ? '男' : '女'
       })
     }
   },
   mounted () {
-    this.getHead()
+    this.getUserInfo()
   }
 }
 </script>

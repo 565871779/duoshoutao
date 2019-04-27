@@ -4,8 +4,8 @@ const router = express.Router();
 router.get('/getStoreList', function(req,res) {
 	let data = req.query;
 	console.log(data);
-    let sql1 = `SELECT * FROM store where uid = ?`;
-    let sql2 = `select * from goods where sid = ?`;
+    let sql1 = `SELECT * FROM store where uid = ? and status = 1`;
+    let sql2 = `select * from goods where sid = ? and status = 1`;
     conn.query(sql1, data.uid, function(err, result){
         if(err){
             console.log(err)
@@ -28,7 +28,7 @@ router.get('/getStoreList', function(req,res) {
 router.get('/getGoodsInfo', function(req,res) {
 	let data = req.query;
 	console.log(data);
-    let sql1 = `SELECT * FROM goods where sid = ?`;
+    let sql1 = `SELECT * FROM goods where sid = ? and status = 1`;
     conn.query(sql1, data.sid, function(err, result){
         if(err){
             console.log(err)
@@ -41,6 +41,37 @@ router.get('/getGoodsInfo', function(req,res) {
     })	
 });
 
+router.get('/deleteGoods', function(req,res) {
+	let data = req.query;
+	console.log(data);
+    let sql1 = 'update `goods` set status = 0 where gid = ?';
+    conn.query(sql1, data.gid, function(err, result){
+        if(err){
+            console.log(err)
+			res.json({r:"数据库错误"})
+			return;
+        }
+        res.json({
+            r: 'ok'
+        })
+    })	
+});
+
+router.get('/closeStore', function(req,res) {
+	let data = req.query;
+	console.log(data);
+    let sql1 = `update store set status = 0 where sid = ?`;
+    conn.query(sql1, data.sid, function(err, result){
+        if(err){
+            console.log(err)
+			res.json({r:"数据库错误"})
+			return;
+        }
+        res.json({
+            r: 'ok'
+        })
+    })	
+});
 
 router.get('/getGoods', function(req,res) {
 	let data = req.query;
@@ -62,7 +93,7 @@ router.get('/getGoods', function(req,res) {
 router.get('/getOrderInfo', function(req,res) {
 	let data = req.query;
 	console.log(data);
-    let sql1 = 'select o.oid,o.submitTime,u.uname,u.phone,o.status,g.gname,o.num,g.price,a.detailadd,a.saddress from `order` as o left join goods as g on o.gid = g.gid left join address as a on o.aid = a.aid left join user as u on o.uid = u.uid where o.status != 3 and o.status != 2 and g.sid = 1;';
+    let sql1 = 'select o.oid,o.submitTime,u.uname,u.phone,o.status,g.gname,o.num,g.price,a.detailadd,a.saddress from `order` as o left join goods as g on o.gid = g.gid left join address as a on o.aid = a.aid left join user as u on o.uid = u.uid where o.status != 3 and o.status != 2 and g.sid = ?;';
     conn.query(sql1, data.sid, function(err, result){
         if(err){
             console.log(err)

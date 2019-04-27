@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="root" v-if="uid">
-      <van-nav-bar title="标题" left-text="返回" left-arrow @click-left="$router.go(-1)">
+      <van-nav-bar title="我的订单" left-text="返回" left-arrow @click-left="$router.go(-1)">
         <van-icon name="search" slot="right"/>
       </van-nav-bar>
       <van-tabs v-model="active">
@@ -29,7 +29,7 @@
             >
               <div slot="footer">
                 <div v-if="item.status === 0">
-                  <van-button size="mini" @click.native="cancelOrder(item.oid)">取消订单</van-button>
+                  <van-button size="mini" @click.native="delectOrder(item.oid)">删除订单</van-button>
                   <van-button size="mini" @click.native="toDetail(item.oid)">支付</van-button>
                 </div>
                 <div v-else-if="item.status === 4">
@@ -67,7 +67,7 @@
             >
               <div slot="footer">
                 <div v-if="item.status === 0">
-                  <van-button size="mini" @click.native="cancelOrder(item.oid)">取消订单</van-button>
+                  <van-button size="mini" @click.native="delectOrder(item.oid)">删除订单</van-button>
                   <van-button size="mini" @click.native="toDetail(item.oid)">支付</van-button>
                 </div>
                 <div v-else>
@@ -212,7 +212,7 @@ export default {
       console.log(123)
       this.$router.push('/order/orderDetail?oid=' + id)
     },
-    cancelOrder (id) {
+    delectOrder (id) {
       Dialog.confirm({
         message: '您确定删除所选订单吗'
       })
@@ -229,7 +229,7 @@ export default {
     cancelOrderSucc (res) {
       console.log(res)
       if (res.data.r === 'ok') {
-        this.$toast('取消订单成功')
+        this.$toast('删除订单成功')
         this.getOrderList()
       }
     },

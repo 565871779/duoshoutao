@@ -110,6 +110,26 @@ export default {
     },
     handleEdit (ind, row) {
       this.$router.push('/goodsEdit?sid=' + this.sid + '&gid=' + row.gid)
+    },
+    handleDelete (ind, row) {
+      this.$confirm('确定下架商品吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$axios.get('http://localhost:8088/admin/store/deleteGoods?gid=' + row.gid)
+          .then((res) => {
+            if (res.data.r === 'ok') {
+              this.$message({
+                type: 'success',
+                message: '下架商品成功!'
+              })
+              this.getStoreInfo()
+            } else {
+              this.$message.error('下架商品失败!')
+            }
+          })
+      })
     }
   },
   watch: {
@@ -121,6 +141,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .root {
+  .el-button--primary {
+    margin: 30px;
+  }
   .content {
     margin-left: 15vw;
   }

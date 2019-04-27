@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.get('/getShopCarList', function(req, res){
     let uid = req.query.uid;
+    let time = new Date().getTime() + ''
     let sql= `select * from goods as g left join shopcar as s on g.gid= s.gid where s.uid = ? and s.status = 0`;
     conn.query(sql,uid, function(err, result) {
         if(err) {
@@ -32,7 +33,7 @@ router.get('/delect', function(req, res){
             return
         }
         res.json({
-            r: result
+            r: 'ok'
         })
     })
 

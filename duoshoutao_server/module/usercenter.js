@@ -71,6 +71,25 @@ router.post('/changePhone', function(req, res){
     })
 })
 
+router.post('/changeSex', function(req, res){
+    let uid = req.body.uid;
+    let usex = req.body.usex
+    let sql = 'update user set usex = ? where uid = ?;'
+    conn.query(sql,[usex, uid], function(err, result) {
+        if(err) {
+            console.log(err)
+            res.json({
+                r:'数据库错误'
+            })
+            return
+        }
+        res.json({
+            r: 'ok'
+        })
+    })
+})
+
+
 router.post('/updateHead', function(req, res){
     let img = req.body.img
     let uid = req.body.uid

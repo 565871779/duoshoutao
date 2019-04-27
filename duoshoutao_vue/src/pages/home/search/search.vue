@@ -19,7 +19,7 @@
       :thumb="item.imageUrl"
       v-for="(item,index) in items"
       :key="index"
-      @click="toDeatail(item.gid)"
+      @click="searchToDeatail(item.gid)"
     >
       <div slot="footer">
         <span>{{item.sellNumber}}人付款</span>
@@ -79,7 +79,7 @@ export default {
       console.log(res)
       this.items = res.data.r
     },
-    toDeatail (id) {
+    searchToDeatail (id) {
       this.$router.push('/store/detail?gid=' + id)
     },
     itemSort (index, title) {

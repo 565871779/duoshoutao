@@ -28,12 +28,13 @@
             <input type="password" placeholder="请输入密码" v-model="password">
           </label>
         </div>
-        <div class="input" style="display:flex;justify-content: space-between;align-items: center">
+        <div class="input" style="display:flex;justify-content: space-between;">
           <label for>
             验证码:
             <input style="width:60%" type="text" placeholder="请输入验证码" v-model="captchaVal">
+          <span v-html="captcha.data" @click="getCaptcha()"></span>
+
           </label>
-          <div v-html="captcha.data" @click="getCaptcha()"></div>
         </div>
       </div>
       <div class="button" @click="login">登   录</div>
@@ -171,11 +172,15 @@ export default {
     label {
       display: block;
       width: 100%;
-      height: 0.8rem;
-      line-height: 0.8rem;
+      height: 1.2rem;
+      line-height: 1.2rem;
       border-bottom: 1px solid #ccc;
-      font-weight: bold;
-      font-size: 0.32rem;
+      font-size: 0.3rem;
+      position: relative;
+      span {
+        position: relative;
+        top: .4rem;
+      }
     }
   }
   .button {

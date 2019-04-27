@@ -176,6 +176,7 @@ export default {
       margin-top: .2rem;
       display: flex;
       justify-content: space-between;
+
       .head {
         width: .8rem;
         height: .8rem;
@@ -204,6 +205,9 @@ export default {
     .content {
         margin-top: .3rem;
         font-size: .32rem;
+        .text {
+        margin-bottom: .3rem;
+      }
         .img {
           display: flex;
           flex-wrap: wrap;

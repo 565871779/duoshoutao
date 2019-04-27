@@ -20,6 +20,7 @@ import createOrder from '@/pages/home/order/buyToCreateOrder'
 import orderDetail from '@/pages/home/order/orderDetail'
 import history from '@/pages/home/history/history'
 import store from '@/pages/home/store/home'
+import collectList from '@/pages/home/collectList/home'
 
 Vue.use(Router)
 
@@ -126,6 +127,11 @@ export default new Router({
       path: '/store',
       name: 'store',
       component: store
+    },
+    {
+      path: '/collectList',
+      name: 'collectList',
+      component: collectList
     }
   ]
 })

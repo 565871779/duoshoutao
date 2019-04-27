@@ -21,8 +21,21 @@
         <el-table-column prop="address" label="收货地址"></el-table-column>
         <el-table-column fixed="right" label="操作" width="150">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">发货</el-button>
-            <el-button type="text" size="small">取消订单</el-button>
+            <div v-if="scope.row.status==='已支付'">
+              <el-button @click="handleClick(scope.row)" type="text" size="small">发货</el-button>
+              <el-button type="text" size="small" @click="cancelClick(scope.row)">取消订单</el-button>
+            </div>
+            <div v-else-if="scope.row.status==='已收货'">
+              <el-button type="text" size="small">查看订单</el-button>
+            </div>
+            <div v-else-if="scope.row.status==='已取消'">
+              已取消
+            </div>
+            <div v-else>
+              <el-button type="text" size="small">查看订单</el-button>
+              <el-button type="text" size="small" @click="cancelClick(scope.row)">取消订单</el-button>
+            </div>
+
           </template>
         </el-table-column>
       </el-table>
@@ -31,6 +44,13 @@
         <span slot="footer" class="dialog-footer">
           <el-button @click="centerDialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="changeStutas">确 定</el-button>
+        </span>
+      </el-dialog>
+      <el-dialog title="提示" :visible.sync="cancelDialogVisible" width="30%" center>
+        <span>您确定取消订单吗？</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="cancelDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="confiremCancel">确 定</el-button>
         </span>
       </el-dialog>
     </div>
@@ -48,7 +68,9 @@ export default {
       uid: JSON.parse(localStorage.getItem('userId')),
       tableData: [],
       sid: this.$route.query.sid,
-      centerDialogVisible: false
+      centerDialogVisible: false,
+      cancelDialogVisible: false,
+      oid: ''
     }
   },
   computed: {},
@@ -74,10 +96,12 @@ export default {
                 : data[i].status === 1
                   ? '已支付'
                   : data[i].status === 4
-                    ? '已支付'
+                    ? '已发货'
                     : data[i].status === 5
                       ? '已收货'
-                      : ''
+                      : data[i].status === 6
+                        ? '已取消'
+                        : ''
             this.tableData[i].address = data[i].detailadd + data[i].saddress
             this.tableData[i].id = data[i].submitTime
           }
@@ -88,22 +112,54 @@ export default {
       this.getOrderInfo()
     },
     tableRowClassName ({ row, rowIndex }) {
-      if (rowIndex === 1) {
+      if (row.status === '已支付') {
         return 'warning-row'
-      } else if (rowIndex === 3) {
+      } else if (row.status === '已收货') {
         return 'success-row'
       }
       return ''
     },
-    handleClick () {
+    handleClick (...res) {
       this.centerDialogVisible = true
-      this.$axios.get('')
-        .then(res => {
-          console.log(res)
-        })
+      this.oid = res[0].oid
+    },
+    cancelClick (...res) {
+      this.cancelDialogVisible = true
+      this.oid = res[0].oid
     },
     changeStutas () {
+      this.$axios.get('http://localhost:8088/admin/order/confirmlOrder?oid=' + this.oid)
+        .then(res => {
+          console.log(res)
+          if (res.data.r === 'ok') {
+            this.$message({
+              message: '发货成功！',
+              type: 'success'
+            })
+            this.getOrderInfo()
 
+            this.centerDialogVisible = false
+          } else {
+            this.$message.error('发货失败！')
+          }
+        })
+    },
+    confiremCancel () {
+      this.$axios.get('http://localhost:8088/admin/order/cancelOrder?oid=' + this.oid)
+        .then(res => {
+          console.log(res)
+          if (res.data.r === 'ok') {
+            this.$message({
+              message: '取消订单成功！',
+              type: 'success'
+            })
+            this.getOrderInfo()
+
+            this.cancelDialogVisible = false
+          } else {
+            this.$message.error('取消订单失败！')
+          }
+        })
     }
   },
   mounted () {

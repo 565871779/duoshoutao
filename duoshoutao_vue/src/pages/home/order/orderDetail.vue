@@ -100,9 +100,31 @@
          </div>
     </div>
     <div class="pay" v-show="goods.status === 0">
-        <van-button round  plain type="danger">付款</van-button>
+        <van-button round  plain @click="submit" type="danger">付款</van-button>
         <van-button round  plain @click="cancle">取消订单</van-button>
     </div>
+    <van-popup v-model="show" position="bottom" @close="close()">
+          <div class="header">
+           <van-icon name="cross" size=".5rem" @click.native="close()"/>
+           <p>确认付款</p>
+           <van-icon name="question-o" size=".5rem" />
+          </div>
+          <div class="popupContent">
+            <div class="price">
+              <span>￥</span>
+              {{totalPrice + '.00'}}
+            </div>
+          </div>
+          <div class="userInfo">
+            <p>剁手淘账号</p>
+            <span>{{uname}}</span>
+          </div>
+          <div class="userInfo">
+            <p>付款方式</p>
+            <span>支付宝<van-icon name="arrow" /></span>
+          </div>
+          <van-button type="info"  size="large" @click="pay">确认支付</van-button>
+      </van-popup>
   </div>
 </template>
 
@@ -128,9 +150,12 @@ export default {
         price: '',
         time: '',
         num: '',
-        status: 1
+        status: 1,
+        gid: ''
       },
-      totalPrice: ''
+      totalPrice: '',
+      show: false,
+      uname: ''
     }
   },
   computed: {},
@@ -149,6 +174,7 @@ export default {
       this.goods.price = data.price
       this.goods.num = data.num
       this.goods.status = data.status
+      this.goods.gid = data.gid
       this.goods.time = new Date(data.submitTime / 1).toLocaleString()
       this.totalPrice = (this.goods.price * this.goods.num).toFixed(2)
       this.getAddress()
@@ -167,14 +193,55 @@ export default {
     cancle () {
       this.$dialog.confirm({
         message: '确定取消订单吗'
-      }).then().catch()
+      }).then(this.cancleOrder).catch()
+    },
+    delectOrder () {
+      this.$dialog.confirm({
+        message: '您确定删除所选订单吗'
+      })
+        .then(() => {
+          // on confirm
+          axios
+            .get('http://localhost:8088/createOrder/cancelOrder?oid=' + this.oid)
+            .then(res => {
+              if (res.data.r === 'ok') {
+                this.$toast('删除订单成功')
+                this.$router.go(-1)
+              }
+            })
+        })
+        .catch(() => {
+          // on cancel
+        })
     },
     cancleOrder () {
-      axios.get('http://localhost:8088/createOrder/').then().catch()
+      axios.get('http://localhost:8088/createOrder/cancelOrder?oid=' + this.oid)
+        .then(res => {
+          if (res.data.r === 'ok') {
+            this.$toast.fail('已取消支付')
+          }
+        })
     },
-    cancleOrderSuccess () {
-
+    submit () {
+      this.show = true
+    },
+    pay () {
+      let param = {}
+      param.aid = this.aid
+      param.gid = this.goods.gid
+      param.num = this.goods.number
+      param.uid = this.uid
+      param.submitTime = new Date().getTime()
+      param.loseTime = param.submitTime + 1000 * 60 * 5
+      axios.post('http://localhost:8088/createOrder/pay', param)
+        .then(res => {
+          this.$toast.success('支付成功')
+          setTimeout(() => {
+            this.$router.push('/order/myorder')
+          }, 1000)
+        })
     }
+
   },
   mounted () {
     this.getOrderInfo()
@@ -365,6 +432,48 @@ export default {
     }
     .van-button--round {
     }
+  }
+   .van-popup--bottom {
+    min-height: 70vh;
+    .header {
+        display: flex;
+        justify-content: space-between;
+        padding: .3rem;
+        box-sizing: border-box;
+        border-bottom: 1px solid #fbf7f7;
+        align-items: center;
+        >p {
+          font-size: .34rem;
+        }
+          }
+      .popupContent {
+        padding-top: .8rem;
+        padding-bottom: .5rem;
+        .price {
+          font-size: .7rem;
+          font-weight: bold;
+          text-align: center;
+          span {
+            font-size: .5rem;
+          }
+        }
+      }
+      .userInfo {
+        padding: .3rem;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #fbf7f7;
+        align-items: center;
+      }
+      .van-button--info {
+        background: #1989fa;
+        width: 92%;
+        margin: 0 auto;
+        margin-top: 2rem;
+        display: block;
+        border-radius: .15rem;
+        color: #fff;
+      }
   }
 }
 </style>
