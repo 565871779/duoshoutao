@@ -112,7 +112,7 @@ export default {
       this.$router.push('/goodsEdit?sid=' + this.sid + '&gid=' + row.gid)
     },
     handleDelete (ind, row) {
-      this.$confirm('确定下架商品吗?', '提示', {
+      this.$confirm('确定删除商品吗?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -122,11 +122,11 @@ export default {
             if (res.data.r === 'ok') {
               this.$message({
                 type: 'success',
-                message: '下架商品成功!'
+                message: '删除商品成功!'
               })
               this.getStoreInfo()
             } else {
-              this.$message.error('下架商品失败!')
+              this.$message.error('删除商品失败!')
             }
           })
       })

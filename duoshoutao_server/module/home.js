@@ -22,7 +22,7 @@ router.post('/getGoodsList',function(req, res) {
 })
 
 router.get('/',function(req,res){
-    let sql = 'SELECT * FROM goods order by rand() limit 5;'
+    let sql = 'SELECT * FROM goods where status = 1 order by rand() limit 5;'
     conn.query(sql,function(err,result) {
         if(err) {
             console.log(err)
@@ -37,6 +37,4 @@ router.get('/',function(req,res){
     })
 
 })
-module.exports = router;
-
 module.exports = router;

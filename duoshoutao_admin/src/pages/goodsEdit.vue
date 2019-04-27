@@ -49,7 +49,6 @@
       </el-form-item>
       <el-form-item size="large">
         <el-button type="primary" @click="onSubmit">保存</el-button>
-        <el-button>取消</el-button>
       </el-form-item>
     </el-form>
         </div>

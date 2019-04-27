@@ -174,7 +174,7 @@ export default {
       this.sid = this.$route.query.sid
     },
     close () {
-      this.$confirm('确定关闭店铺吗?', '提示', {
+      this.$confirm('确定删除店铺吗?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

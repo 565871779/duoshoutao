@@ -6,7 +6,7 @@
           <template slot="title">
             <div class="headLeft">
               <img :src="imgUrl" alt="用户头像">
-              <span class="custom-text">无铭Emiya</span>
+              <span class="custom-text">{{uname}}</span>
             </div>
           </template>
         </van-cell>
@@ -67,7 +67,8 @@ export default {
       showSex: false,
       sex: '',
       uid: JSON.parse(localStorage.getItem('userId')),
-      imgUrl: '@/assets/images/users/header.jpg'
+      imgUrl: '@/assets/images/users/header.jpg',
+      uname: ''
     }
   },
   computed: {},
@@ -113,6 +114,7 @@ export default {
         console.log(res)
         let data = res.data.r[0]
         this.imgUrl = data.uhead
+        this.uname = data.uname
         this.sex = data.usex === 1 ? '男' : '女'
       })
     }

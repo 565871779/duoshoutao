@@ -90,7 +90,7 @@ export default {
     },
     getItem () {
       axios
-        .get('http://localhost:8088/store/home?sid=' + this.sid)
+        .get('http://localhost:8088/store/getGoodsList?sid=' + this.sid)
         .then(this.getItemSuccess)
     },
     getItemSuccess (res) {

@@ -62,14 +62,14 @@ export default {
         })
     },
     toStoreEdit (id) {
-      if (this.storeList.length >= 3) {
-        this.$message({
-          showClose: true,
-          message: '最多开设3个店铺哦',
-          type: 'error'
-        })
-        return
-      }
+      // if (this.storeList.length >= 3) {
+      //   this.$message({
+      //     showClose: true,
+      //     message: '最多开设3个店铺哦',
+      //     type: 'error'
+      //   })
+      //   return
+      // }
       if (id) {
         this.$router.push('/storeEdit?sid=' + id)
       } else {

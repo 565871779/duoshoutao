@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-router.get('/home', function(req, res){
+router.get('/getGoodsList', function(req, res){
     let sid = req.query.sid;
-    let sql = 'select * from goods where sid = ?;'
+    let sql = 'select * from goods where sid = ?  where status = 1;'
     conn.query(sql, [sid], function(err, result) {
         if(err) {
             console.log(err)
@@ -19,7 +19,7 @@ router.get('/home', function(req, res){
 
 router.get('/getStoreDetail', function(req, res){
     let sid = req.query.sid;
-    let sql = 'select * from store where sid = ?;'
+    let sql = 'select * from store where sid = ? where status = 1;'
     conn.query(sql, [sid], function(err, result) {
         if(err) {
             console.log(err)
@@ -37,7 +37,7 @@ router.get('/getStoreDetail', function(req, res){
 router.get('/search', function(req, res){
     let kw = req.query.kw;
     let sid = req.query.sid
-    let sql = `select * from goods where sid = ${sid} and details like '%${kw}%' or sid = ${sid} and gname like '%${kw}%' ;`
+    let sql = `select * from goods where status = 1 sid = ${sid} and details like '%${kw}%' or sid = ${sid} and gname like '%${kw}%' ;`
     conn.query(sql, function(err, result) {
         if(err) {
             console.log(err)

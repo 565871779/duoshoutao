@@ -64,7 +64,7 @@ const upload = multer({storage: diskstorage});
 // 验证码图片
 app.get('/coder', (req, res) => {
 	//设置验证码的各种参数
-    var captcha = svgCaptcha.create({noise:4,ignoreChars: '0o1i', size:1,background: '#cc9966',height:35, width:80});
+    var captcha = svgCaptcha.create({noise:4,ignoreChars: '0o1i', size:4,background: '#cc9966',height:35, width:80});
     //把生成的验证码存到session里面,方便判断输入的验证码是否正确
 	req.session.coder = captcha.text;
     // 使用ejs等模板时如果报错 res.type('html')
