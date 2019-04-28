@@ -49,4 +49,7 @@ export default {
 .add {
     margin-bottom: 10px;
 }
+/deep/ .sidebar {
+  top: 62px;
+}
 </style>

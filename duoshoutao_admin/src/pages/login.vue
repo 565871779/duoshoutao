@@ -98,9 +98,14 @@ export default {
         message: '登录成功!',
         type: 'success'
       })
-      setTimeout(() => {
-        this.$router.push('./home/store')
-      }, 1000)
+      if (data.admin === 0) {
+        setTimeout(() => {
+          this.$router.push('./home/store')
+        }, 1000)
+      } else {
+        localStorage.setItem('admin', data.admin)
+        this.$router.push('./admin')
+      }
     })
   }},
   mounted () {}

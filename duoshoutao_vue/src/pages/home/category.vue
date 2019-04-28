@@ -19,7 +19,7 @@
             <div class="item"></div>
           </div> -->
            <div class="head">
-             <img :src="categoryArr[chosedInd].img" alt="">
+             <img :src="categoryArr[chosedInd].img" alt="" >
           </div>
            <vue-better-scroll class="wrapper"
                          ref="scroll"

@@ -7,6 +7,7 @@
       text-color="#8dacc4"
       active-text-color="#fff"
       unique-opened
+      v-if="!admin"
     >
       <template v-for="item in menus">
         <template v-if="item.children && item.value === 'goods'">
@@ -49,6 +50,24 @@
         </template>
       </template>
     </el-menu>
+    <el-menu
+      class="el-menu-vertical-demo"
+      :default-active="setMenuActive()"
+      background-color="#1c2b36"
+      text-color="#8dacc4"
+      active-text-color="#fff"
+      unique-opened
+      v-else
+    >
+      <template v-for="item in adminMeus">
+        <template >
+          <el-menu-item :index="`${item.value}`" :key="item.id" @click="toAdmin(item.value)">
+            <i :class="`fa ${icons[item.id-1]}`"></i>
+            {{ item.name }}
+          </el-menu-item>
+        </template>
+      </template>
+    </el-menu>
   </div>
 </template>
 <script>
@@ -76,12 +95,27 @@ export default {
         children: [
         ]
       }],
+      adminMeus: [{
+        id: 1,
+        value: 'suser',
+        name: '商家管理'
+      },
+      {
+        id: 2,
+        value: 'store',
+        name: '店铺管理'
+      }],
       uid: JSON.parse(localStorage.getItem('userId')),
       sid: this.$route.query.sid,
-      defaultOpen: ['1']
+      defaultOpen: ['1'],
+      admin: JSON.parse(localStorage.getItem('admin'))
     }
   },
   computed: {
+  },
+  props: {
+    test: {type: String}
+
   },
   methods: {
     setMenuActive () {
@@ -113,10 +147,24 @@ export default {
     },
     link (name) {
       this.$router.push('/home/' + name)
+    },
+    getStoreAdmin () {
+
+    },
+    toAdmin (name) {
+      if (name === 'suser') {
+        this.$router.push('/admin')
+      }
+      this.$router.push('/admin/' + name)
     }
   },
   mounted () {
-    this.getStoreList()
+    console.log(this.test)
+    if (this.admin) {
+      this.getStoreAdmin()
+    } else {
+      this.getStoreList()
+    }
   }
 }
 </script>
@@ -126,7 +174,7 @@ export default {
   position: absolute;
   width: 240px;
   left: 0;
-  top: 55px;
+  top: 62px;
   bottom: 0;
   border-right: 1px solid #17232c;
   transition: left 0.5s ease;
