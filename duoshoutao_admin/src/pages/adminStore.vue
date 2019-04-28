@@ -28,7 +28,7 @@
                 <span>{{ new Date(props.row.starttime * 1).toLocaleString() }}</span>
               </el-form-item>
               <el-form-item label="封禁时长">
-                <span>{{ new Date(props.row.time * 1).getDay() }} 天</span>
+                <span>{{props.row.time}} 天</span>
               </el-form-item>
               <el-form-item label="封禁结束时间">
                 <span>{{ new Date(props.row.endtime * 1).toLocaleString() }}</span>

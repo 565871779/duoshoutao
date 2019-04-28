@@ -12,23 +12,20 @@
         <template slot-scope="props">
           <div v-if="props.row.status==='封禁中'">
             <el-form label-position="left" inline class="demo-table-expand">
-              <el-form-item label="店铺头像">
-                <img :src="props.row.imageUrl" alt>
+              <el-form-item label="用户头像">
+                <img :src="props.row.uhead" alt>
               </el-form-item>
-              <el-form-item label="店铺名称">
-                <span>{{ props.row.sname }}</span>
+              <el-form-item label="用户名">
+                <span>{{ props.row.suname }}</span>
               </el-form-item>
-              <el-form-item label="店铺 ID">
-                <span>{{ props.row.sid }}</span>
-              </el-form-item>
-              <el-form-item label="店铺描述">
-                <span>{{ props.row.detail }}</span>
+              <el-form-item label="用户 ID">
+                <span>{{ props.row.uid }}</span>
               </el-form-item>
               <el-form-item label="封禁开始时间">
                 <span>{{ new Date(props.row.starttime * 1).toLocaleString() }}</span>
               </el-form-item>
               <el-form-item label="封禁时长">
-                <span>{{ new Date(props.row.time * 1).getDay() }} 天</span>
+                <span>{{ props.row.time }} 天</span>
               </el-form-item>
               <el-form-item label="封禁结束时间">
                 <span>{{ new Date(props.row.endtime * 1).toLocaleString() }}</span>
@@ -37,32 +34,32 @@
                 <span>{{ props.row.reason }}</span>
               </el-form-item>
               <el-form-item label="操作人">
-                <span>{{ props.row.uname }}</span>
+                <span>{{ props.row.auname }}</span>
               </el-form-item>
             </el-form>
           </div>
           <div v-else>
             <el-form label-position="left" inline class="demo-table-expand">
-              <el-form-item label="店铺头像">
-                <img :src="props.row.imageUrl" alt>
+              <el-form-item label="用户头像">
+                <img :src="props.row.uhead" alt>
               </el-form-item>
-              <el-form-item label="店铺名称">
-                <span>{{ props.row.sname }}</span>
+              <el-form-item label="用户名">
+                <span>{{ props.row.suname }}</span>
               </el-form-item>
-              <el-form-item label="店铺 ID">
-                <span>{{ props.row.sid }}</span>
+              <el-form-item label="用户 ID">
+                <span>{{ props.row.uid }}</span>
               </el-form-item>
-              <el-form-item label="店铺描述">
-                <span>{{ props.row.detail }}</span>
+              <el-form-item label="用户手机号">
+                <span>{{ props.row.phone }}</span>
               </el-form-item>
             </el-form>
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="sid" label="ID" width="200"></el-table-column>
-      <el-table-column prop="sname" label="名字" width="200"></el-table-column>
-      <el-table-column prop="detail" label="描述"></el-table-column>
-      <el-table-column prop="status" label="状态" width="120"></el-table-column>
+      <el-table-column prop="uid" label="用户ID" width="400"></el-table-column>
+      <el-table-column prop="suname" label="用户名" width="400"></el-table-column>
+      <el-table-column prop="phone" label="用户手机号"></el-table-column>
+      <el-table-column prop="status" label="状态" width="220"></el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
           <div v-if="scope.row.status==='正常'">
@@ -74,9 +71,9 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog title="封禁店铺" :visible.sync="dialogFormVisible">
+    <el-dialog title="封禁用户" :visible.sync="dialogFormVisible">
       <el-form :model="form">
-        <el-form-item label="店铺名字" :label-width="formLabelWidth">
+        <el-form-item label="用户名" :label-width="formLabelWidth">
           <el-input v-model="form.sname" disabled autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="封禁理由" :label-width="formLabelWidth">
@@ -131,9 +128,9 @@ export default {
     }
   },
   methods: {
-    getStoreList () {
+    getSuserList () {
       this.$axios
-        .get('http://localhost:8088/admin/admin/getStoreList')
+        .get('http://localhost:8088/admin/admin/getSuserList')
         .then(res => {
           console.log(res)
           this.tableData = res.data.r
@@ -157,26 +154,27 @@ export default {
     handleClick (...res) {
       console.log(res)
       this.dialogFormVisible = true
-      this.form.sname = res[0].sname
-      this.form.sid = res[0].sid
+      this.form.suname = res[0].suname
+      this.form.suid = res[0].uid
       // this.$axios.post('http://localhost:8088/admin/admin/banStore', par)
       //   .then()
     },
     confirmBan () {
-      this.$confirm(`确定将${this.form.sname}封禁${this.form.time} 天吗？ `, '提示', {
+      this.$confirm(`确定将${this.form.suname}封禁${this.form.time} 天吗？ `, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         let par = {}
-        par.sid = this.form.sid
+        par.suid = this.form.suid
         par.uid = this.uid
         par.reason = this.form.reason
         par.time = this.form.time
         par.starttime = new Date().getTime()
+        par.uname = this.name
         par.endtime = new Date().getTime() + par.time * 1000 * 60 * 60 * 24
         console.log(par)
-        this.$axios.post('http://localhost:8088/admin/admin/banStore', par)
+        this.$axios.post('http://localhost:8088/admin/admin/banSuser', par)
           .then(res => {
             if (res.data.r === 'ok') {
               this.$message({
@@ -184,7 +182,7 @@ export default {
                 message: '操作成功!'
               })
               setTimeout(() => {
-                this.getStoreList()
+                this.getSuserList()
                 this.dialogFormVisible = false
               }, 1000)
             }
@@ -197,19 +195,19 @@ export default {
       })
     },
     cancelBan (...res) {
-      this.$confirm(`确定取消对${res[0].sname}的封禁吗?`, '提示', {
+      this.$confirm(`确定取消对${res[0].suname}的封禁吗?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$axios.get('http://localhost:8088/admin/admin/cancelBanStore?sid=' + res[0].sid)
+        this.$axios.get('http://localhost:8088/admin/admin/cancelBanSuser?suid=' + res[0].uid)
           .then(res => {
             if (res.data.r === 'ok') {
               this.$message({
                 type: 'success',
                 message: '取消封禁成功!'
               })
-              this.getStoreList()
+              this.getSuserList()
             }
           })
       }).catch(() => {
@@ -218,10 +216,19 @@ export default {
           message: '已取消操作'
         })
       })
+    },
+    getUserInfo () {
+      this.$axios.get('http://localhost:8088/admin/userCenter/getUserInfo?uid=' + this.uid)
+        .then((res) => {
+          console.log(res)
+          let data = res.data.r[0]
+          this.name = data.uname
+        })
     }
   },
   created () {
-    this.getStoreList()
+    this.getUserInfo()
+    this.getSuserList()
   }
 }
 </script>
