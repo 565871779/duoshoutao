@@ -9,6 +9,7 @@ import './assets/reset.scss'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import VueParticles from 'vue-particles'
+import store from './store'
 
 Vue.prototype.$axios = axios
 Vue.use(ElementUI)
@@ -27,6 +28,7 @@ router.beforeEach((to, from, next) => {
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

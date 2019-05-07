@@ -49,7 +49,6 @@
       reset-selected-sku-on-hide
       disable-stepper-input
       :close-on-click-overlay="closeOnClickOverlay"
-      :message-config="messageConfig"
       :custom-sku-validator="customSkuValidator"
       @buy-clicked="onBuyClicked"
       @add-cart="onAddCartClicked"

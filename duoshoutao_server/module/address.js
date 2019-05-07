@@ -60,7 +60,7 @@ router.post('/saveAddress', function(req, res){
     let par = req.body;
     let sql;
     let arr;
-    if ( !par.aid ) {
+    if ( par.aid === undefined) {
         sql = 'INSERT INTO address (sname,sphone,saddress,detailadd,postcode,areaCode,uid,isdefault) values (?,?,?,?,?,?,?,?)';
         arr = [par.sname, par.sphone, par.saddress, par.detailadd, par.postcode, par.areaCode, par.uid, par.default]
     } else {
@@ -68,8 +68,8 @@ router.post('/saveAddress', function(req, res){
         sql = 'update address set sname = ?, sphone = ?, saddress = ?, detailadd = ?, postcode = ?, areaCode = ?, uid = ?, isdefault = ? where aid = ?';
     }
     if (par.default === 1) {
-        let sql2 = 'update address set isdefault = 0 where aid = ? and isdefault = 1'
-        conn.query(sql2, par.aid, function(err, result) {
+        let sql2 = 'update address set isdefault = 0 where uid = ? and isdefault = 1'
+        conn.query(sql2, par.uid, function(err, result) {
             if(err) {
                 console.log(err)
                 res.json({

@@ -38,14 +38,6 @@ export default {
           address: '浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室'
         }
       ],
-      disabledList: [
-        {
-          id: '3',
-          name: '王五',
-          tel: '1320000000',
-          address: '浙江省杭州市滨江区江南大道 15 号'
-        }
-      ],
       isFromOrder: false
     }
   },
@@ -72,6 +64,7 @@ export default {
     },
     getAddressListSuccess (res) {
       console.log(res)
+      this.list = []
       let data = res.data.r
       for (let i = 0; i < data.length; i++) {
         this.list[i] = {}

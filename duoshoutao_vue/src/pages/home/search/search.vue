@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <van-nav-bar fixed title="搜索结果" left-text="返回" @click-right="toSearch" left-arrow>
+    <van-nav-bar fixed title="搜索结果" left-text="返回" @click-right="toSearch" @click-left="$router.go(-1)" left-arrow>
       <van-icon name="search" slot="right"/>
     </van-nav-bar>
     <van-tabs v-model="active" @click="itemSort">
@@ -81,6 +81,7 @@
       <div class="history">
         <p>历史搜索</p>
         <van-tag plain v-for="(item,index) in kwList" @click="checkKw(item)" :key="index">{{item}}</van-tag>
+        <div v-if="kwList.length===0">暂无搜索历史</div>
       </div>
     </div>
   </div>
@@ -186,7 +187,9 @@ export default {
   },
   mounted () {
     this.getItem()
-    this.getHistory()
+    if (this.uid) {
+      this.getHistory()
+    }
   }
 }
 </script>
@@ -336,7 +339,10 @@ export default {
     background-color: #fff;
     border-radius: 0.15rem;
     box-sizing: border-box;
-    padding-top: 0.3rem;
+    padding: 0.3rem 0.2rem;
+    div {
+      text-align: center;
+    }
     p {
       margin-bottom: 0.3rem;
     }
@@ -349,5 +355,8 @@ export default {
 }
 .searchTransfomr {
   transform: translate(0, 0);
+}
+.van-nav-bar__text,.van-icon {
+    color: #f8831e;
 }
 </style>

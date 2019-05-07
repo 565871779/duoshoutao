@@ -2,7 +2,7 @@
     <div>
         <div class="line"></div>
         <Header></Header>
-        <Aside :test="'456'"></Aside>
+        <Aside test="456" ></Aside>
         <router-view></router-view>
     </div>
 </template>
@@ -21,9 +21,6 @@ export default {
     Header
   },
   methods: {
-    name () {
-
-    }
   }
 }
 </script>

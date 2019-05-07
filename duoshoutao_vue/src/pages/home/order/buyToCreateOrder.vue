@@ -1,7 +1,8 @@
 /* eslint-disable vue/no-dupe-keys */
 <template>
   <div class="root">
-    <van-cell value is-link v-if="address.sname !== '暂无'" @click="toAddressList">
+    <div v-if="uid">
+      <van-cell value is-link v-if="address.sname !== '暂无'" @click="toAddressList">
       <template slot="title">
         <div class="slot">
           <div class="icon">
@@ -127,13 +128,19 @@
           </div>
           <van-button type="info"  size="large" @click="pay">确认支付</van-button>
       </van-popup>
+    </div>
+    <toLogin v-else></toLogin>
+
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import toLogin from '../common/toLogin'
 export default {
-  components: {},
+  components: {
+    toLogin
+  },
   data () {
     return {
       address: {
@@ -177,7 +184,6 @@ export default {
       axios.get(request).then(this.getAddressSuccess).catch()
     },
     getAddressSuccess (res) {
-      console.log(res)
       if (res.data.r.length === 0) {
         this.$dialog.confirm({
           title: '请先设置收货地址',
@@ -267,11 +273,23 @@ export default {
       }
     },
     paySuccess (res) {
-      console.log(res)
-      this.$toast.success('支付成功')
-      setTimeout(() => {
-        this.$router.push('/order/myorder')
-      }, 1000)
+      if (this.id) {
+        let id = this.id
+        let arr = id.split(',')
+        for (let i = 0; i < arr.length; i++) {
+          id = arr[i]
+          axios.get('http://localhost:8088/shopCar/delect?id=' + id)
+            .then(() => {
+              this.$toast.success('支付成功')
+              setTimeout(() => {
+                this.$router.push('/order/myorder')
+              }, 1000)
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        }
+      }
     },
     getUserInfo () {
       axios.get('http://localhost:8088/userCenter/getUserInfo?uid=' + this.uid)
@@ -285,9 +303,11 @@ export default {
     }
   },
   mounted () {
-    this.getAddress()
-    this.getGoodsInfo()
-    this.getUserInfo()
+    if (this.uid) {
+      this.getAddress()
+      this.getGoodsInfo()
+      this.getUserInfo()
+    }
   }
 }
 </script>

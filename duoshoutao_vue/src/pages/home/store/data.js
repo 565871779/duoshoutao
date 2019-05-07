@@ -140,7 +140,7 @@ export default {
         type: 'text',
         disable_delete: false,
         disable_type: false,
-        required: '1'
+        required: 0
       },
       {
         datetime: '0',

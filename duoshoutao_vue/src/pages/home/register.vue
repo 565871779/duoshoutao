@@ -51,8 +51,9 @@
         </div>
 
       </van-cell-group>
-      <van-button size="large" @click="register">立即注册</van-button>
+
     </form>
+    <van-button size="large" @click="register">立即注册</van-button>
   </div>
 </template>
 <script>
@@ -127,26 +128,42 @@ export default {
     register () {
       var This = this
       This.errmsg.uermsg = ''
+      if (!this.formdata.uname) {
+        this.errmsg.uermsg = '请输入用户名'
+        return false
+      }
+      if (!this.formdata.password) {
+        this.errmsg.permsg = '请输入密码'
+        return false
+      }
+      if (!this.affirm) {
+        this.errmsg.aermsg = '请重复密码'
+        return false
+      }
+      if (!this.formdata.phone) {
+        this.errmsg.nermsg = '请输入手机号'
+        return false
+      }
       if (This.err) {
         return
       }
-      axios({
-        method: 'post',
-        url: 'http://localhost:8088/register',
-        data: This.formdata
-      })
-        .then(response => {
-          console.log('请求成功', response.data)
-          This.mydata = response.data
-          if (This.mydata.r === 'user_existed') {
+      axios.post('http://localhost:8088/register', This.formdata)
+        .then(res => {
+          console.log('请求成功', res.data)
+          let data = res.data
+          if (data.r === 'user_existed') {
             This.errmsg.uermsg = '用户名已存在'
+            return
           }
-          if (This.mydata.r === 'ok') {
-            this.$router.push({ path: '/login' })
+          if (data.r === 'ok') {
+            this.$toast.success('注册成功！')
+            setTimeout(() => {
+              this.$router.push({ path: '/login' })
+            }, 1000)
           }
         })
-        .catch(response => {
-          console.log('发送Ajax请求失败', response)
+        .catch(res => {
+          console.log('发送Ajax请求失败', res)
         })
     }
   },

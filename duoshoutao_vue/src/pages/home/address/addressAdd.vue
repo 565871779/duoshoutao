@@ -45,7 +45,6 @@ export default {
 
   methods: {
     onSave (data) {
-      console.log(data)
       let param = {}
       param.aid = this.$route.query.aid
       param.sname = data.name
@@ -64,6 +63,7 @@ export default {
       } else {
         param.default = 0
       }
+      console.log(param)
       axios.post('http://localhost:8088/address/saveAddress', param).then(this.saveSuccess).catch()
     },
     saveSuccess (res) {

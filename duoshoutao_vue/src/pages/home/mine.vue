@@ -98,7 +98,9 @@ export default {
     }
   },
   mounted () {
-    this.getUserInfo()
+    if (this.uid) {
+      this.getUserInfo()
+    }
     this.checkOrderStatus()
   }
 }

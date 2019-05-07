@@ -1,6 +1,6 @@
 <template>
   <div class="root">
-      <van-nav-bar title="请先登录" left-text="返回" left-arrow @click-left="$router.go(-1)"/>
+      <van-nav-bar v-if="!isFind" title="请先登录" left-text="返回" left-arrow @click-left="$router.go(-1)"/>
       <div class="content">
           <img src="@/assets/logo.png" alt="">
           <div>您还没有登录</div>
@@ -14,6 +14,7 @@ export default {
   components: {},
   data () {
     return {
+      isFind: window.location.href.includes('find')
     }
   },
   computed: {},
@@ -22,14 +23,16 @@ export default {
       this.$router.push('/login')
     }
   },
-  mounted () {}
+  mounted () {
+    console.log(this.isFind)
+  }
 }
 </script>
 <style lang="scss" scoped>
 .root{
     width: 100%;
     height: 100vh;
-    background-color: #fff;
+    background-color: #fff !important;
     position: fixed;
     top: 0;
     left: 0;
