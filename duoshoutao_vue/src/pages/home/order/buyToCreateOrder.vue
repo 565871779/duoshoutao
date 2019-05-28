@@ -115,7 +115,7 @@
           <div class="popupContent">
             <div class="price">
               <span>￥</span>
-              {{totalPrice + '.00'}}
+              {{totalPrice.toFixed(2)}}
             </div>
           </div>
           <div class="userInfo">
@@ -259,6 +259,7 @@ export default {
       }, 1000)
     },
     pay () {
+      console.log(this.glist)
       for (let i = 0; i < this.glist.length; i++) {
         let param = {}
         param.aid = this.aid
@@ -273,6 +274,11 @@ export default {
       }
     },
     paySuccess (res) {
+      console.log(res)
+      if (res.data.r !== 'ok') {
+        this.$toast.fail('支付异常，请稍候再试')
+        return
+      }
       if (this.id) {
         let id = this.id
         let arr = id.split(',')
@@ -289,6 +295,11 @@ export default {
               console.log(err)
             })
         }
+      } else {
+        this.$toast.success('支付成功')
+        setTimeout(() => {
+          this.$router.push('/order/myorder')
+        }, 1000)
       }
     },
     getUserInfo () {

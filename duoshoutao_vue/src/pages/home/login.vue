@@ -79,7 +79,7 @@ export default {
         Toast.fail('请输入验证码！')
         return
       }
-      if (this.captchaVal.toLowerCase() !== this.captcha.value) {
+      if (this.captchaVal.toLowerCase() !== this.captcha.value.toLowerCase()) {
         Toast.fail('验证码错误！')
         return
       }

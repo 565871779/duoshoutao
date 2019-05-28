@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 router.get('/getGoodsList', function(req, res){
     let sid = req.query.sid;
-    let sql = 'select * from goods where sid = ?  where status = 1;'
-    conn.query(sql, [sid], function(err, result) {
+    let sql = 'select * from goods where sid = ?  and status = 1 or sid = ?  and status =3;'
+    conn.query(sql, [sid,sid], function(err, result) {
         if(err) {
             console.log(err)
             res.json({
@@ -19,7 +19,7 @@ router.get('/getGoodsList', function(req, res){
 
 router.get('/getStoreDetail', function(req, res){
     let sid = req.query.sid;
-    let sql = 'select * from store where sid = ? where status = 1;'
+    let sql = 'select * from store where sid = ? and status = 1;'
     conn.query(sql, [sid], function(err, result) {
         if(err) {
             console.log(err)
@@ -37,7 +37,7 @@ router.get('/getStoreDetail', function(req, res){
 router.get('/search', function(req, res){
     let kw = req.query.kw;
     let sid = req.query.sid
-    let sql = `select * from goods where status = 1 sid = ${sid} and details like '%${kw}%' or sid = ${sid} and gname like '%${kw}%' ;`
+    let sql = `select * from goods where status = 1 and sid = ${sid} and details like '%${kw}%' or sid = ${sid} and gname like '%${kw}%' ;`
     conn.query(sql, function(err, result) {
         if(err) {
             console.log(err)
@@ -146,7 +146,7 @@ router.get('/getStoreName', function(req, res){
 
 router.get('/getCollectList', function(req, res){
     let uid = req.query.uid; 
-    let sql = 'select * from scollect where uid = ? and status = 1'
+    let sql = 'select * from scollect as c left join store as s on c.sid = s.sid where c.uid = ? and c.status = 1'
     conn.query(sql, uid, function(err, result) {
         if(err) {
             console.log(err)

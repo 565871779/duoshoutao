@@ -14,6 +14,7 @@ router.get('/getStoreList', function(req,res) {
         }
         for ( let i = 0 ;i < result.length; i++) {
             conn.query(sql2, result[i].sid, function(er, results) {
+                console.log(result[i].sid)
                 result[i].selled = results[0].price * results[0].sellNumber
                 if (i == result.length - 1) {
                     res.json({
@@ -93,7 +94,7 @@ router.get('/getGoods', function(req,res) {
 router.get('/getOrderInfo', function(req,res) {
 	let data = req.query;
 	console.log(data);
-    let sql1 = 'select o.oid,o.submitTime,u.uname,u.phone,o.status,g.gname,o.num,g.price,a.detailadd,a.saddress from `order` as o left join goods as g on o.gid = g.gid left join address as a on o.aid = a.aid left join user as u on o.uid = u.uid where o.status != 3 and o.status != 2 and g.sid = ?;';
+    let sql1 = 'select o.oid,o.submitTime,u.uname,u.phone,o.status,g.gname,o.num,g.price,a.detailadd,a.saddress from `order` as o left join goods as g on o.gid = g.gid left join address as a on o.aid = a.aid left join user as u on o.uid = u.uid where o.status != 3 and o.status != 2 and g.sid = ? order by o.submitTime desc;';
     conn.query(sql1, data.sid, function(err, result){
         if(err){
             console.log(err)

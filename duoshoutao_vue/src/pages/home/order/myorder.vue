@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="root" v-if="uid">
-      <van-nav-bar title="我的订单" left-text="返回" left-arrow @click-left="$router.go(-1)">
-        <van-icon name="search" slot="right"/>
+      <van-nav-bar title="我的订单" left-text="返回" left-arrow @click-left="$router.go(-1)" @click-right="$router.push('/home')">
+        <van-icon name="home-o" slot="right"/>
       </van-nav-bar>
       <van-tabs v-model="active">
         <van-tab title="全部">

@@ -35,7 +35,8 @@
     </van-cell-group>
 
     <van-cell-group>
-      <van-cell icon="gold-coin-o" title="我的优惠券" is-link />
+      <van-cell icon="gold-coin-o" title="浏览历史" is-link url="/history" />
+      <van-cell icon="discount" title="我的收藏" is-link url="/collectList" />
       <van-cell icon="discount" title="设置" is-link url="/userUpdate" />
     </van-cell-group>
   </div>

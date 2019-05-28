@@ -112,7 +112,7 @@
           <div class="popupContent">
             <div class="price">
               <span>￥</span>
-              {{totalPrice + '.00'}}
+              {{totalPrice}}
             </div>
           </div>
           <div class="userInfo">
@@ -225,15 +225,14 @@ export default {
     submit () {
       this.show = true
     },
+    close () {
+      this.$toast.fail('已取消支付')
+      this.show = false
+    },
     pay () {
       let param = {}
-      param.aid = this.aid
-      param.gid = this.goods.gid
-      param.num = this.goods.number
-      param.uid = this.uid
-      param.submitTime = new Date().getTime()
-      param.loseTime = param.submitTime + 1000 * 60 * 5
-      axios.post('http://localhost:8088/createOrder/pay', param)
+      param.oid = this.oid
+      axios.post('http://localhost:8088/createOrder/payOrder', param)
         .then(res => {
           this.$toast.success('支付成功')
           setTimeout(() => {

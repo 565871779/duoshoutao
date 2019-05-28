@@ -18,10 +18,10 @@
     </van-cell-group>
 
     <van-cell-group class="goods-cell-group">
-      <van-cell value="进入店铺" icon="shop-o" is-link  :to="'/store?sid=' + sid">
+      <van-cell value="进入店铺" icon="shop-o" is-link  @click="toStore">
         <template slot="title">
           <span class="van-cell-text">{{sname}}</span>
-          <van-tag class="goods-tag" type="danger">官方</van-tag>
+          <van-tag v-if="sname!=='暂无所属店铺'" class="goods-tag" type="danger">官方</van-tag>
         </template>
       </van-cell>
       <van-cell title="线下门店" icon="location-o" is-link/>
@@ -143,6 +143,11 @@ export default {
         that.pushHistory()
       }, 5000)
     },
+    toStore () {
+      if (this.sname !== '暂无所属店铺') {
+        this.$router.push('/store?sid=' + this.sid)
+      }
+    },
     pushHistory () {
       axios.get('http://localhost:8088/detail/addHistory?gid=' + this.gid + '&uid=' + this.uid)
     },
@@ -171,8 +176,10 @@ export default {
       axios.post('http://localhost:8088/detail/addShopCar', param).then(this.addCartClickedSuccess).catch()
     },
     addCartClickedSuccess (res) {
-      console.log(res)
       this.$toast('添加成功，赶紧看看吧')
+      setTimeout(() => {
+        this.$router.push('/home/shopCar')
+      }, 1000)
     },
     getGoodsDetail () {
       let gid = this.$route.query.gid
@@ -204,7 +211,11 @@ export default {
       axios.get('http://localhost:8088/store/getStoreName?sid=' + this.sid)
         .then(res => {
           console.log(res)
-          this.sname = res.data.r[0].sname
+          if (res.data.r.length) {
+            this.sname = res.data.r[0].sname
+          } else {
+            this.sname = '暂无所属店铺'
+          }
         })
     }
   },

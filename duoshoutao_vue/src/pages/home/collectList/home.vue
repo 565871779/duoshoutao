@@ -1,5 +1,6 @@
 <template>
-  <div class="root">
+<div>
+  <div class="root" v-if="uid">
        <van-nav-bar
         title="我的关注"
         left-text="返回"
@@ -22,23 +23,21 @@
                 {{item.sname}}
             </div>
         </div>
-        <div class="item">
-            <div class="icon">
-                <img src="http://duoshoutao.oss-cn-beijing.aliyuncs.com/goods/%E5%AE%B6%E7%94%A8%E7%94%B5%E5%99%A8/dianqi-12.jpg" alt="">
-            </div>
-            <div class="text">
-                美的
-            </div>
-        </div>
       </div>
 
   </div>
+  <toLogin v-else></toLogin>
+</div>
+
 </template>
 
 <script>
 import axios from 'axios'
+import toLogin from '../common/toLogin'
 export default {
-  components: {},
+  components: {
+    toLogin
+  },
   data () {
     return {
       uid: JSON.parse(localStorage.getItem('userId')),
@@ -97,5 +96,8 @@ export default {
                 margin-left: .5rem;
             }
     }
+}
+.van-nav-bar__text,.van-icon {
+    color: #f8831e;
 }
 </style>

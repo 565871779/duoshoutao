@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/getHistory', function(req, res){
     let uid = req.query.uid
-    let sql = "select * from history as f left join goods as g on f.gid = g.gid where f.uid = ?";
+    let sql = "select * from history as f left join goods as g on f.gid = g.gid where f.uid = ? order by hid desc";
     conn.query(sql, uid, function(err, result) {
         if(err) {
             console.log(err)

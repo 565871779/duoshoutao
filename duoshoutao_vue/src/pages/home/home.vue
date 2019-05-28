@@ -44,7 +44,18 @@ export default {
       }
     }
   },
-  mounted () {
+  created () {
+    if (window.location.href.includes('find')) {
+      localStorage.setItem('bottomClick', 1)
+    } else if (window.location.href.includes('category')) {
+      localStorage.setItem('bottomClick', 2)
+    } else if (window.location.href.includes('shopCar')) {
+      localStorage.setItem('bottomClick', 3)
+    } else if (window.location.href.includes('mine')) {
+      localStorage.setItem('bottomClick', 4)
+    } else {
+      localStorage.setItem('bottomClick', 0)
+    }
     this.pageStatus = JSON.parse(localStorage.getItem('bottomClick'))
   }
 }

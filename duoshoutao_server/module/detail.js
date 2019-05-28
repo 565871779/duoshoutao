@@ -22,8 +22,8 @@ router.get('/', function(req, res){
 router.get('/addHistory', function(req, res){
     let gid = req.query.gid;
     let uid = req.query.uid;
-    let sql = "INSERT INTO history (uid,gid) values (?,?);";
-    conn.query(sql,[uid, gid], function(err, result) {
+    let sql = "delete from history where uid = ? and gid = ?;INSERT INTO history (uid,gid) values (?,?);";
+    conn.query(sql,[uid, gid,uid, gid], function(err, result) {
         if(err) {
             console.log(err)
             res.json({

@@ -37,7 +37,7 @@ router.get('/byId', function(req, res){
 
 router.get('/getOrderList', function(req, res){
     let uid = req.query.uid;
-    let sql = "select * from  goods as g left join `order` as o on o.gid = g.gid where o.uid = ? and o.status != 3;";
+    let sql = "select * from  goods as g left join `order` as o on o.gid = g.gid where o.uid = ? and o.status != 3 order by o.submitTime desc;";
     conn.query(sql, uid, function(err, result) {
         if(err) {
             console.log(err)
@@ -82,7 +82,24 @@ router.post('/pay', function(req, res){
             return
         }
         res.json({
-            r: result
+            r: 'ok'
+        })
+    })
+
+})
+router.post('/payOrder', function(req, res){
+    let par = req.body;
+    let sql = "update `order` set status = 1 where oid = ?;"
+    conn.query(sql, [par.oid ], function(err, result) {
+        if(err) {
+            console.log(err)
+            res.json({
+                r:'数据库错误'
+            })
+            return
+        }
+        res.json({
+            r: 'ok'
         })
     })
 

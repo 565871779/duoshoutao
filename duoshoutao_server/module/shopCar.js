@@ -4,9 +4,9 @@ const router = express.Router();
 
 router.get('/getShopCarList', function(req, res){
     let uid = req.query.uid;
-    let time = new Date().getTime() + ''
-    let sql= `select * from goods as g left join shopcar as s on g.gid= s.gid where s.uid = ? and s.status = 0`;
-    conn.query(sql,uid, function(err, result) {
+    let time = new Date().getTime()
+    let sql= `select * from goods as g left join shopcar as s on g.gid= s.gid where s.uid = ? and s.status = 0 and s.losetime > ?`;
+    conn.query(sql,[uid,time], function(err, result) {
         if(err) {
             console.log(err)
             res.json({

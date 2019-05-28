@@ -1,15 +1,8 @@
 <template>
 <div class="main">
-  <div class="root">
-    <van-nav-bar fixed title="标题" left-text="返回" left-arrow>
-      <van-icon name="search" slot="right" />
+  <div class="root" v-if="uid">
+    <van-nav-bar fixed title="浏览历史" left-text="返回"  @click-left="$router.go(-1)" left-arrow>
     </van-nav-bar>
-    <van-tabs v-model="active" @click="itemSort">
-      <van-tab title="综合" index="1"></van-tab>
-      <van-tab title="价格升序" index="2"></van-tab>
-      <van-tab title="价格降序" index="3"></van-tab>
-      <van-tab title="筛选" index="4"></van-tab>
-    </van-tabs>
     <div class="content">
     <van-card
       tag="免邮"
@@ -27,28 +20,18 @@
     </van-card>
     </div>
   </div>
-  <div class="search" :class="{'searchTransfomr': isShowSearch}">
-    <header>
-      <div @click="isShowSearch=false">取消</div>
-      <div class="input">
-        <input type="text">
-      </div>
-      <div class="button">
-        <van-button round type="danger" size="small">搜索</van-button>
-      </div>
-    </header>
-    <!-- <div class="history">
-      <p>历史搜索</p>
-      <van-tag plain v-for="(item,index) in kwList" @click="checkKw(item)" :key="index">{{item}}</van-tag>
-    </div> -->
-  </div>
+  <toLogin v-else></toLogin>
+
 </div>
 </template>
 
 <script>
 import axios from 'axios'
+import toLogin from '../common/toLogin'
 export default {
-  components: {},
+  components: {
+    toLogin
+  },
   data () {
     return {
       imageURL:
@@ -117,6 +100,7 @@ export default {
   }
   .content {
     padding-bottom: .3rem;
+    margin-top: 46px;
   }
   .van-card__price {
     font-size: .38rem
@@ -189,5 +173,8 @@ export default {
   }
 .searchTransfomr {
     transform: translate(0,0)
+}
+.van-nav-bar__text,.van-icon {
+    color: #f8831e;
 }
 </style>

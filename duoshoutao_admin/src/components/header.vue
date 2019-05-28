@@ -51,6 +51,7 @@ export default {
     },
     logOut () {
       localStorage.removeItem('userId')
+      localStorage.removeItem('admin')
       this.$router.go(0)
     }
   },

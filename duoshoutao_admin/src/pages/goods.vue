@@ -3,7 +3,7 @@
     <Aside @clickTab="refresh"></Aside>
     <div class="content">
       <el-button type="primary" @click="toEdit">新增商品</el-button>
-      <el-table :data="tableData" style="width: 100%">
+      <el-table :data="tableData" style="width: 100%" height="700">
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">

@@ -2,7 +2,7 @@
   <div class="login">
     <div class="login-mian">
       <div class="title">
-        <strong>剁手掏</strong>商家管理系统
+        <strong>剁手淘</strong>  商家管理系统
       </div>
       <el-form ref="loginForm" :model="login" :rules="loginRules">
         <el-form-item prop="name">
@@ -93,6 +93,20 @@ export default {
     this.$axios.post('http://localhost:8088/admin/login', this.login).then(res => {
       console.log(res)
       let data = res.data
+      if (res.data.r === 'no_user') {
+        this.$message({
+          message: '用户名不存在!',
+          type: 'error'
+        })
+        return
+      }
+      if (res.data.r === 'p_err') {
+        this.$message({
+          message: '密码错误!',
+          type: 'error'
+        })
+        return
+      }
       localStorage.setItem('userId', data.uid)
       this.$message({
         message: '登录成功!',
@@ -100,6 +114,7 @@ export default {
       })
       if (data.admin === 0) {
         setTimeout(() => {
+          localStorage.setItem('admin', data.admin)
           this.$router.push('./home/store')
         }, 1000)
       } else {
@@ -107,7 +122,8 @@ export default {
         this.$router.push('./admin')
       }
     })
-  }},
+  }
+  },
   mounted () {}
 }
 </script>
@@ -132,6 +148,7 @@ export default {
       font-size: 20px;
       color: #333;
       margin-bottom: 30px;
+      color:#fff;
       strong {
         color: #f8831e;
         font-weight: 700;
