@@ -15,7 +15,7 @@
 
 
 ## 运行步骤
-> git clone https://github.com/565871779/duoshoutao.git (如果没有安装GIT也可以在https://github.com/565871779/duoshoutao中直接下载压缩包解压) 
+> git clone git@github.com:565871779/duoshoutao.git (如果没有安装GIT也可以在https://github.com/565871779/duoshoutao中直接下载压缩包解压) 
 
 > 以下命令均在window系统的cmd环境下运行
 
