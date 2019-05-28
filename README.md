@@ -7,9 +7,9 @@
 
 # 项目运行
 ## 环境：
-> nodejs(在nodejs官网http://nodejs.cn/download/中下载安装)
+> nodejs(在nodejs官网http://nodejs.cn/download/ 中下载安装)
 
-> MySql 5.6(在https://dev.mysql.com/downloads/mysql/5.6.html中下载，然后根据https://blog.csdn.net/qq_33028695/article/details/80489655中的步骤安装)。安装成功后打开SQLyog软件，将数据库文件duoshoutao.sql导入到计算机
+> MySql 5.6(在https://dev.mysql.com/downloads/mysql/5.6.htm l中下载，然后根据https://blog.csdn.net/qq_33028695/article/details/80489655 中的步骤安装)。安装成功后打开SQLyog软件，将数据库文件duoshoutao.sql导入到计算机
 
 > 浏览器：除ie外的所有主流浏览器（推荐chrome），在浏览客户端时需要按F12进入控制台后按下ctrl + shift + m进入手机调试模式后才能正常浏览（推荐机型选择iPhone 6/7/8 plus）
 
