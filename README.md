@@ -26,6 +26,6 @@
 > 在duoshoutao_admin中打开cmd窗口，然后运行命令npm install安装所需依赖，在安装完成后运行命令npm run dev启动后端管理
 
 ------
-在各部分均成功启动后，访问http://localhost:8080/home可进入到客户端首页；
-访问http://localhost:8081/login可进入到后端管理系统。
+在各部分均成功启动后，访问http://localhost:8080/home 可进入到客户端首页；
+访问http://localhost:8081/login 可进入到后端管理系统。
 在后端管理系统中测试商家的用户名为a123456，密码为a123456。测试的管理员用户名为admin，密码为admin
