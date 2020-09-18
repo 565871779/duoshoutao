@@ -13,7 +13,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.6.3",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.13.1",
     "particles.js": "^2.0.0",
     "vue": "^2.5.2",
     "vue-particles": "^1.0.9",
